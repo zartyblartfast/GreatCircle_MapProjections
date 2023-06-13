@@ -29,12 +29,7 @@ def index():
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
         
         # Generate the map
-        try:
-            generate_map(projection, locations)
-        except Exception as e:
-            with open("/home/zartyblartfast/error_log.txt", "a") as file:
-                file.write(f"Error in map generation: {e}\n")
-                file.write(f"Traceback: {traceback.format_exc()}\n")
+
 
         
         # Serve the generated map to the user
