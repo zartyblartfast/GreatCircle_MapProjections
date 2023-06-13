@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, send_file
 import os
 from map_generator import main as generate_map
 import cartopy.crs as ccrs
+import traceback
 
 app = Flask(__name__)
 
@@ -28,11 +29,12 @@ def index():
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
         
         # Generate the map
-        #generate_map(projection, locations)
         try:
             generate_map(projection, locations)
         except Exception as e:
-            print(f"Error in map generation: {e}")
+            with open("/home/zartyblartfast/error_log.txt", "a") as file:
+                file.write(f"Error in map generation: {e}\n")
+                file.write(f"Traceback: {traceback.format_exc()}\n")
 
         
         # Serve the generated map to the user
