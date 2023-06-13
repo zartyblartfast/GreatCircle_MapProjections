@@ -87,7 +87,7 @@ def main(projection, locations):
 
     #test
     with open('/home/zartyblartfast/map_generator_test.txt', 'w') as f:
-    f.write("Map generator test.")
+        f.write("Map generator test.")
 
     plt.close(fig)  # Close the figure to free up memory
 
