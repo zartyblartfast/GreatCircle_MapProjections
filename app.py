@@ -9,6 +9,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
+        print("POST request received") # added this line
         # Get user input
         location1 = request.form.get('location1').split(',')
         location2 = request.form.get('location2').split(',')
@@ -23,28 +24,29 @@ def index():
             (location3[0], float(location3[1]), float(location3[2])),
             (location4[0], float(location4[1]), float(location4[2])),
         ]
+        print("Locations:", locations) # added this line
         if projection == 'PlateCarree':
             projection = ccrs.PlateCarree()
         elif projection == 'AzimuthalEquidistant':
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
         
-        # Generate the map
-        # Generate the map
-        generate_map(projection, locations)
-
-        #try:
-        #    generate_map(projection, locations)
-        #    with open('/home/zartyblartfast/GreatCircle_MapProjections/test.txt', 'w') as f:
-        #        f.write("This is a test.")
-        #except Exception as e:
-        #    return str(e)
+        print("Before map generation") # added this line
+        try:
+            generate_map(projection, locations)
+            with open('/home/zartyblartfast/GreatCircle_MapProjections/test.txt', 'w') as f:
+                f.write("This is a test.")
+        except Exception as e:
+            print("Error during map generation:", str(e)) # added this line
+            return str(e)
         
+        print("After map generation") # added this line
         # Serve the generated map to the user
         image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', 'map_image.png')
         return send_file(image_path, mimetype='image/png')
         
     # Add this line to print the current working directory to the webpage
     return os.getcwd() + '<br>' + render_template('index.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
