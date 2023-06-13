@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Great Circles on Two Different Map Projections</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Display Great Circles on Two Different Map Projections</h1>
+    <p>This web page is designed to help people get a better understanding of great circles, which are the shortest paths between two points on the surface of a sphere, and map projections, which are methods for representing the surface of a sphere in two dimensions. We use Planet Earth as our example sphere. Learn more about <a href="https://example.com/great-circles">great circles</a> and <a href="https://example.com/map-projections">map projections</a>.</p>
+    
+    <form id="locationsForm">
+        <fieldset>
+            <legend>First Pair of Locations</legend>
+            <!-- Your location input fields go here -->
+        </fieldset>
+
+        <fieldset id="secondPair" hidden>
+            <legend>Second Pair of Locations</legend>
+            <!-- Your location input fields go here -->
+        </fieldset>
+
+        <label><input type="checkbox" id="toggleSecondPair"> Add Second Pair of Locations</label>
+        <br>
+        <label><input type="checkbox" checked> Display Gridlines</label>
+        <label><input type="checkbox" checked> Display Location Labels</label>
+        <label><input type="checkbox" checked> Display Distance Labels</label>
+        <br>
+        <button type="submit">Generate Maps</button>
+    </form>
+    
+    <div id="map1"></div>
+    <div id="map2"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
