@@ -35,6 +35,14 @@ def index():
         # Serve the generated map to the user
         image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', 'map_image.png')
         return send_file(image_path, mimetype='image/png')
+    
+        # test
+        try:
+            with open('/home/zartyblartfast/GreatCircle_MapProjections/test.txt', 'w') as f:
+                f.write("This is a test.")
+            return send_file('map_image.png', mimetype='image/png')
+        except Exception as e:
+            return str(e)
 
     return render_template('index.html')
 
