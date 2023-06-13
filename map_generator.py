@@ -85,6 +85,10 @@ def main(projection, locations):
     #plt.savefig("map_image.png")  # Save the generated map as a PNG image
     plt.savefig("/home/zartyblartfast/GreatCircle_MapProjections/map_image.png")
 
+    #test
+    with open('/home/zartyblartfast/map_generator_test.txt', 'w') as f:
+    f.write("Map generator test.")
+
     plt.close(fig)  # Close the figure to free up memory
 
 if __name__ == "__main__":
