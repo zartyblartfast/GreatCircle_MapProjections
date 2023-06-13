@@ -41,6 +41,10 @@ def plot_location_point(name, lon, lat, ax, color='r'):
     return color  # Return the color code
 
 def main(projection, locations):
+    
+    #test
+    print("generate_map called with", projection, locations)
+
     # Unpack the location details
     location1, location2, location3, location4 = locations
 
