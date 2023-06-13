@@ -82,7 +82,9 @@ def main(projection, locations):
         for lat in np.arange(-90, 91, 30):
             ax.annotate(str(lat), xy=(0, lat), xycoords=ccrs.PlateCarree()._as_mpl_transform(ax), fontsize=10)
 
-    plt.savefig("map_image.png")  # Save the generated map as a PNG image
+    #plt.savefig("map_image.png")  # Save the generated map as a PNG image
+    plt.savefig("/home/zartyblartfast/GreatCircle_MapProjections/map_image.png")
+
     plt.close(fig)  # Close the figure to free up memory
 
 if __name__ == "__main__":
