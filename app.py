@@ -29,12 +29,15 @@ def index():
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
         
         # Generate the map
-        try:
-            generate_map(projection, locations)
-            with open('/home/zartyblartfast/GreatCircle_MapProjections/test.txt', 'w') as f:
-                f.write("This is a test.")
-        except Exception as e:
-            return str(e)
+        # Generate the map
+        generate_map(projection, locations)
+
+        #try:
+        #    generate_map(projection, locations)
+        #    with open('/home/zartyblartfast/GreatCircle_MapProjections/test.txt', 'w') as f:
+        #        f.write("This is a test.")
+        #except Exception as e:
+        #    return str(e)
         
         # Serve the generated map to the user
         image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', 'map_image.png')
