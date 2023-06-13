@@ -29,22 +29,19 @@ def index():
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
         
         # Generate the map
-
-
+        try:
+            generate_map(projection, locations)
+            with open('/home/zartyblartfast/GreatCircle_MapProjections/test.txt', 'w') as f:
+                f.write("This is a test.")
+        except Exception as e:
+            return str(e)
         
         # Serve the generated map to the user
         image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', 'map_image.png')
         return send_file(image_path, mimetype='image/png')
-    
-        # test
-        try:
-            with open('/home/zartyblartfast/GreatCircle_MapProjections/test.txt', 'w') as f:
-                f.write("This is a test.")
-            return send_file('map_image.png', mimetype='image/png')
-        except Exception as e:
-            return str(e)
-
-    return render_template('index.html')
+        
+    # Add this line to print the current working directory to the webpage
+    return os.getcwd() + '<br>' + render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
