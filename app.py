@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, send_file
 from map_generator import main as generate_map
 import cartopy.crs as ccrs
+import os
 
 app = Flask(__name__)
+
+
+print("Current working directory:", os.getcwd())
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
