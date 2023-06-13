@@ -1,12 +1,9 @@
 from flask import Flask, render_template, request, send_file
+import os
 from map_generator import main as generate_map
 import cartopy.crs as ccrs
-import os
 
 app = Flask(__name__)
-
-
-print("Current working directory:", os.getcwd())
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -34,7 +31,8 @@ def index():
         generate_map(projection, locations)
         
         # Serve the generated map to the user
-        return send_file('map_image.png', mimetype='image/png')
+        image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', 'map_image.png')
+        return send_file(image_path, mimetype='image/png')
 
     return render_template('index.html')
 
