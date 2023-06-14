@@ -40,8 +40,8 @@ def plot_location_point(name, lon, lat, ax, color='r'):
 
     return color  # Return the color code
 
-def main(projection, locations):
-    
+#def main(projection, locations):
+def main(projection, locations, output_file):
     #test
     print("generate_map called with", projection, locations)
 
@@ -94,7 +94,10 @@ def main(projection, locations):
         f.write("Map generator test.")
 
     plt.close(fig)  # Close the figure to free up memory
-
+    
+    # Finally, save the figure to the output file
+    plt.savefig(output_file)
+    
 if __name__ == "__main__":
     location1 = ('Tokyo_HND', 35.5494, 139.7798)
     location2 = ('London_LHR', 51.4700, -0.4543)
