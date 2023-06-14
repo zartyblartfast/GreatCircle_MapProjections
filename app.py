@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    logging.info('Inside index function')
     if request.method == 'POST':
         #print("POST request received") # added this line
         logging.info("POST request received")
