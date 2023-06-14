@@ -24,13 +24,13 @@ def index():
         logging.info('Received POST request')
 
         # Get user input
-        location1_str = [request.form.get('location1Lat'), request.form.get('location1Lon')]
-        location2_str = [request.form.get('location2Lat'), request.form.get('location2Lon')]
-        location3_str = [request.form.get('location3Lat'), request.form.get('location3Lon')]
-        location4_str = [request.form.get('location4Lat'), request.form.get('location4Lon')]
+        location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
+        location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
+        location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
+        location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
 
-        location1 = [convert_coord(x) for x in location1_str]
-        location2 = [convert_coord(x) for x in location2_str]
+        location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
+        location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
 
         if None in location1 or None in location2:
             return "Location 1 or Location 2 were not provided in correct format"
@@ -38,8 +38,8 @@ def index():
         location3 = None
         location4 = None
         if location3_str[0] and location3_str[1] and location4_str[0] and location4_str[1]:
-            location3 = [convert_coord(x) for x in location3_str]
-            location4 = [convert_coord(x) for x in location4_str]
+            location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
+            location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
 
         # Process user input
         locations = [tuple(location1), tuple(location2)]
@@ -47,7 +47,6 @@ def index():
             locations.extend([tuple(location3), tuple(location4)])
 
         logging.info(f"Locations: {locations}")
-
 
         try:
             # For the first projection (PlateCarree)
