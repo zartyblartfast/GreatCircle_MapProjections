@@ -15,27 +15,34 @@ def index():
         logging.info('Received POST request')
 
         # Get user input
-        location1_str = request.form.get('location1')
-        location2_str = request.form.get('location2')
-        location3_str = request.form.get('location3')
-        location4_str = request.form.get('location4')
+        location1_str = request.form.get('location1Lat') + request.form.get('location1Lon')
+        location2_str = request.form.get('location2Lat') + request.form.get('location2Lon')
+        location3_str = request.form.get('location3Lat') + request.form.get('location3Lon')
+        location4_str = request.form.get('location4Lat') + request.form.get('location4Lon')
 
         # Check for None values
-        if location1_str is None or location2_str is None or location3_str is None or location4_str is None:
-            return "One or more locations were not provided"
+        if location1_str is None or location2_str is None:
+            return "Location 1 or Location 2 were not provided"
 
         location1 = location1_str.split(',')
         location2 = location2_str.split(',')
-        location3 = location3_str.split(',')
-        location4 = location4_str.split(',')
+        location3 = None
+        location4 = None
+
+        if location3_str is not None and location4_str is not None:
+            location3 = location3_str.split(',')
+            location4 = location4_str.split(',')
         
         # Process user input
         locations = [
             (location1[0], float(location1[1]), float(location1[2])),
             (location2[0], float(location2[1]), float(location2[2])),
-            (location3[0], float(location3[1]), float(location3[2])),
-            (location4[0], float(location4[1]), float(location4[2])),
         ]
+        if location3 is not None and location4 is not None:
+            locations.append(
+                (location3[0], float(location3[1]), float(location3[2])),
+                (location4[0], float(location4[1]), float(location4[2])),
+            )
         logging.info(f"Locations: {locations}")
 
         try:
