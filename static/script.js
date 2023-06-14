@@ -1,4 +1,8 @@
-document.getElementById('toggleSecondPair').addEventListener('change', function() {
-    document.getElementById('secondPair').hidden = !this.checked;
+document.getElementById('toggleSecondPair').addEventListener('click', function() {
+    var secondPair = document.getElementById('secondPair');
+    if (secondPair.hidden) {
+        secondPair.hidden = false;
+    } else {
+        secondPair.hidden = true;
+    }
 });
-
