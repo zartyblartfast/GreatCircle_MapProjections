@@ -15,19 +15,19 @@
         <legend>First Pair of Locations</legend>
         <table>
             <tr>
-                <th>Location #</th>
+                <th>Location Name</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
             </tr>
             <tr>
-                <td>A</td>
-                <td><input type="text" id="location1Lat" name="location1Lat" value="45.0N"></td>
-                <td><input type="text" id="location1Lon" name="location1Lon" value="0.1E"></td>
+                <td><input type="text" id="location1Name" name="location1Name" value="Tokyo_HND"></td>
+                <td><input type="text" id="location1Lat" name="location1Lat" value="35.5494N"></td>
+                <td><input type="text" id="location1Lon" name="location1Lon" value="139.7798E"></td>
             </tr>
             <tr>
-                <td>B</td>
-                <td><input type="text" id="location2Lat" name="location2Lat" value="41.1N"></td>
-                <td><input type="text" id="location2Lon" name="location2Lon" value="147.1E"></td>
+                <td><input type="text" id="location2Name" name="location2Name" value="London_LHR"></td>
+                <td><input type="text" id="location2Lat" name="location2Lat" value="51.4700N"></td>
+                <td><input type="text" id="location2Lon" name="location2Lon" value="0.4543W"></td>
             </tr>
         </table>
     </fieldset>
@@ -36,37 +36,29 @@
         <legend>Second Pair of Locations</legend>
         <table>
             <tr>
-                <th>Location #</th>
+                <th>Location Name</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
             </tr>
             <tr>
-                <td>A</td>
-                <td><input type="text" id="location3Lat" name="location3Lat" value="33.9715S"></td>
-                <td><input type="text" id="location3Lon" name="location3Lon" value="18.6021E"></td>
+                <td><input type="text" id="location3Name" name="location3Name" value="Cape_Town_CPT"></td>
+                <td><input type="text" id="location3Lat" name="location3Lat" value="33.9648S"></td>
+                <td><input type="text" id="location3Lon" name="location3Lon" value="18.6017E"></td>
             </tr>
             <tr>
-                <td>B</td>
-                <td><input type="text" id="location4Lat" name="location4Lat" value="42.8361S"></td>
-                <td><input type="text" id="location4Lon" name="location4Lon" value="147.5110E"></td>
+                <td><input type="text" id="location4Name" name="location4Name" value="Berlin_TXL"></td>
+                <td><input type="text" id="location4Lat" name="location4Lat" value="52.5580N"></td>
+                <td><input type="text" id="location4Lon" name="location4Lon" value="13.2880E"></td>
             </tr>
         </table>
     </fieldset>
 
-
-            <label><input type="checkbox" id="toggleSecondPair"> Add Second Pair of Locations</label>
-            <br>
-            <label><input type="checkbox" checked> Display Gridlines</label>
-            <label><input type="checkbox" checked> Display Location Labels</label>
-            <label><input type="checkbox" checked> Display Distance Labels</label>
-            <br>
-            <button type="submit">Generate Maps</button>
-        </form>
-        
-        <div id="map1"></div>
-        <div id="map2"></div>
-
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
-
+    <p><button type="button" id="toggleSecondPair">Show/Hide Second Pair of Locations</button></p>
+    <p><button type="submit">Display Great Circles</button></p>
+</form>
+    
+    <div id="mapProjection1"></div>
+    <div id="mapProjection2"></div>
 </body>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </html>
