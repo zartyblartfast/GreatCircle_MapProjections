@@ -3,6 +3,9 @@ import os
 from map_generator import main as generate_map
 import cartopy.crs as ccrs
 import traceback
+import logging
+
+logging.basicConfig(filename='/home/zartyblartfast/GreatCircle_MapProjections/app.log', level=logging.DEBUG)
 
 app = Flask(__name__)
 
