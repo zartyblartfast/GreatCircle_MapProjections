@@ -12,7 +12,9 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        print("POST request received") # added this line
+        #print("POST request received") # added this line
+        logging.info("POST request received")
+
         # Get user input
         location1 = request.form.get('location1').split(',')
         location2 = request.form.get('location2').split(',')
@@ -27,22 +29,29 @@ def index():
             (location3[0], float(location3[1]), float(location3[2])),
             (location4[0], float(location4[1]), float(location4[2])),
         ]
-        print("Locations:", locations) # added this line
+        #print("Locations:", locations) # added this line
+        logging.info("Locations:")
+
         if projection == 'PlateCarree':
             projection = ccrs.PlateCarree()
         elif projection == 'AzimuthalEquidistant':
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
         
-        print("Before map generation") # added this line
+        #print("Before map generation") # added this line
+        logging.info("Locations:")
+        
         try:
             generate_map(projection, locations)
             with open('/home/zartyblartfast/GreatCircle_MapProjections/test.txt', 'w') as f:
                 f.write("This is a test.")
+                logging.info("Map generated")
         except Exception as e:
-            print("Error during map generation:", str(e)) # added this line
+            #print("Error during map generation:", str(e)) # added this line
+            logging.info("Error during map generation: %s", e)
             return str(e)
         
-        print("After map generation") # added this line
+        #print("After map generation") # added this line
+        logging.info("After map generation")
         # Serve the generated map to the user
         image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', 'map_image.png')
         return send_file(image_path, mimetype='image/png')
