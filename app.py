@@ -64,6 +64,12 @@ def index():
         
         logging.info("After map generation")
 
+        try:
+            logging.info(f"Checking if directory exists: {os.path.isdir('/home/zartyblartfast/GreatCircle_MapProjections')}")
+            logging.info(f"Checking write access to directory: {os.access('/home/zartyblartfast/GreatCircle_MapProjections', os.W_OK)}")
+        except Exception as e:
+            logging.error(f"Error during directory checks: {e}")
+
     # Add this line to print the current working directory to the webpage
     return os.getcwd() + '<br>' + render_template('index.html')
 
