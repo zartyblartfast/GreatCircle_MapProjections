@@ -39,10 +39,13 @@ def index():
             (float(location2[0]), float(location2[1])),
         ]
         if location3 is not None and location4 is not None:
-            locations.append(
-                (float(location3[0]), float(location3[1])),
-                (float(location4[0]), float(location4[1])),
+            locations.extend(
+                [
+                    (float(location3[0]), float(location3[1])),
+                    (float(location4[0]), float(location4[1])),
+                ]
             )
+
         logging.info(f"Locations: {locations}")
 
 
