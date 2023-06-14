@@ -93,10 +93,11 @@ def main(projection, locations, output_file):
     with open('/home/zartyblartfast/map_generator_test.txt', 'w') as f:
         f.write("Map generator test.")
 
-    plt.close(fig)  # Close the figure to free up memory
-    
-    # Finally, save the figure to the output file
+    # Save the generated map as a PNG image to the specified output file
     plt.savefig(output_file)
+    
+    # Close the figure to free up memory
+    plt.close(fig)  # Close the figure to free up memory
     
 if __name__ == "__main__":
     location1 = ('Tokyo_HND', 35.5494, 139.7798)
