@@ -15,10 +15,19 @@ def index():
         logging.info('Received POST request')
 
         # Get user input
-        location1 = request.form.get('location1').split(',')
-        location2 = request.form.get('location2').split(',')
-        location3 = request.form.get('location3').split(',')
-        location4 = request.form.get('location4').split(',')
+        location1_str = request.form.get('location1')
+        location2_str = request.form.get('location2')
+        location3_str = request.form.get('location3')
+        location4_str = request.form.get('location4')
+
+        # Check for None values
+        if location1_str is None or location2_str is None or location3_str is None or location4_str is None:
+            return "One or more locations were not provided"
+
+        location1 = location1_str.split(',')
+        location2 = location2_str.split(',')
+        location3 = location3_str.split(',')
+        location4 = location4_str.split(',')
         
         # Process user input
         locations = [
