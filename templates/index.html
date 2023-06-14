@@ -10,44 +10,48 @@
     <h1>Display Great Circles on Two Different Map Projections</h1>
     <p>This web page is designed to help people get a better understanding of great circles, which are the shortest paths between two points on the surface of a sphere, and map projections, which are methods for representing the surface of a sphere in two dimensions. We use Planet Earth as our example sphere. Learn more about <a href="https://example.com/great-circles">great circles</a> and <a href="https://example.com/map-projections">map projections</a>.</p>
     
-    <form id="locationsForm" method="POST" action="/">
-        <fieldset>
-            <legend>First Pair of Locations</legend>
-            <table>
-                <tr>
-                    <th>Location #</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                </tr>
-                <tr>
-                    <td>A</td>
-                    <td><input type="text" id="location1Lat" name="location1" placeholder="45.0N,0.1E"></td>
-                </tr>
-                <tr>
-                    <td>B</td>
-                    <td><input type="text" id="location2Lat" name="location2" placeholder="41.1N,147.1E"></td>
-                </tr>
-            </table>
-        </fieldset>
+<form id="locationsForm" method="POST" action="/">
+    <fieldset>
+        <legend>First Pair of Locations</legend>
+        <table>
+            <tr>
+                <th>Location #</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td><input type="text" id="location1Lat" name="location1Lat" placeholder="45.0N"></td>
+                <td><input type="text" id="location1Lon" name="location1Lon" placeholder="0.1E"></td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td><input type="text" id="location2Lat" name="location2Lat" placeholder="41.1N"></td>
+                <td><input type="text" id="location2Lon" name="location2Lon" placeholder="147.1E"></td>
+            </tr>
+        </table>
+    </fieldset>
 
-        <fieldset id="secondPair" hidden>
-            <legend>Second Pair of Locations</legend>
-            <table>
-                <tr>
-                    <th>Location #</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                </tr>
-                <tr>
-                    <td>A</td>
-                    <td><input type="text" id="location3Lat" name="location3" placeholder=""></td>
-                </tr>
-                <tr>
-                    <td>B</td>
-                    <td><input type="text" id="location4Lat" name="location4" placeholder=""></td>
-                </tr>
-            </table>
-        </fieldset>
+    <fieldset id="secondPair" hidden>
+        <legend>Second Pair of Locations</legend>
+        <table>
+            <tr>
+                <th>Location #</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td><input type="text" id="location3Lat" name="location3Lat" placeholder=""></td>
+                <td><input type="text" id="location3Lon" name="location3Lon" placeholder=""></td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td><input type="text" id="location4Lat" name="location4Lat" placeholder=""></td>
+                <td><input type="text" id="location4Lon" name="location4Lon" placeholder=""></td>
+            </tr>
+        </table>
+    </fieldset>
 
             <label><input type="checkbox" id="toggleSecondPair"> Add Second Pair of Locations</label>
             <br>
