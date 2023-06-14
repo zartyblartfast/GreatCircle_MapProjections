@@ -9,6 +9,15 @@ logging.basicConfig(filename='/home/zartyblartfast/GreatCircle_MapProjections/ap
 
 app = Flask(__name__)
 
+def convert_coord(coord_str):
+    if not coord_str[-1].upper() in ('N', 'S', 'E', 'W'):
+        return None
+    direction = coord_str[-1].upper()
+    coord = float(coord_str[:-1])
+    if direction in ('S', 'W'):
+        coord *= -1  # Switch to negative for S and W
+    return coord
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -20,31 +29,22 @@ def index():
         location3_str = [request.form.get('location3Lat'), request.form.get('location3Lon')]
         location4_str = [request.form.get('location4Lat'), request.form.get('location4Lon')]
 
-        # Check for None values
-        if None in location1_str or None in location2_str:
-            return "Location 1 or Location 2 were not provided"
+        location1 = [convert_coord(x) for x in location1_str]
+        location2 = [convert_coord(x) for x in location2_str]
 
-        location1 = location1_str
-        location2 = location2_str
+        if None in location1 or None in location2:
+            return "Location 1 or Location 2 were not provided in correct format"
+
         location3 = None
         location4 = None
-
-        if location3_str[0] is not None and location3_str[1] is not None and location4_str[0] is not None and location4_str[1] is not None:
-            location3 = location3_str
-            location4 = location4_str
+        if location3_str[0] and location3_str[1] and location4_str[0] and location4_str[1]:
+            location3 = [convert_coord(x) for x in location3_str]
+            location4 = [convert_coord(x) for x in location4_str]
 
         # Process user input
-        locations = [
-            (float(location1[0]), float(location1[1])),
-            (float(location2[0]), float(location2[1])),
-        ]
-        if location3 is not None and location4 is not None:
-            locations.extend(
-                [
-                    (float(location3[0]), float(location3[1])),
-                    (float(location4[0]), float(location4[1])),
-                ]
-            )
+        locations = [tuple(location1), tuple(location2)]
+        if location3 and location4:
+            locations.extend([tuple(location3), tuple(location4)])
 
         logging.info(f"Locations: {locations}")
 
