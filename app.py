@@ -6,6 +6,7 @@ import traceback
 import logging
 
 logging.basicConfig(filename='/home/zartyblartfast/GreatCircle_MapProjections/app.log', level=logging.DEBUG)
+logging.info('Info message - Logging started')
 
 app = Flask(__name__)
 
