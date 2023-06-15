@@ -21,10 +21,13 @@ def convert_coord(coord_str):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # Define the variables with default values here
+    filename_plate_carree = "default_PlateCarree.png"
+    filename_azimuthal_equidistant = "default_AzimuthalEquidistant.png"
+    
     if request.method == 'POST':
         logging.info('Received POST request')
 
-        # Get user input
         location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
         location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
         location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
@@ -42,7 +45,6 @@ def index():
             location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
             location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
 
-        # Process user input
         locations = [tuple(location1), tuple(location2)]
         if location3 and location4:
             locations.extend([tuple(location3), tuple(location4)])
@@ -50,16 +52,13 @@ def index():
         logging.info(f"Locations: {locations}")
 
         try:
-            # Generate unique filenames based on time stamp
             time_str = datetime.now().strftime("%Y%m%d%H%M%S")
             filename_plate_carree = f"map_image_PlateCarree_{time_str}.png"
             filename_azimuthal_equidistant = f"map_image_AzimuthalEquidistant_{time_str}.png"
 
-            # For the first projection (PlateCarree)
             projection = ccrs.PlateCarree()
             generate_map(projection, locations, filename_plate_carree)
 
-            # For the second projection (AzimuthalEquidistant)
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
             generate_map(projection, locations, filename_azimuthal_equidistant)
 
@@ -76,7 +75,6 @@ def index():
         except Exception as e:
             logging.error(f"Error during directory checks: {e}")
 
-    # Add this line to print the current working directory to the webpage
     return os.getcwd() + '<br>' + render_template('index.html', 
                                                   filename_plate_carree=filename_plate_carree, 
                                                   filename_azimuthal_equidistant=filename_azimuthal_equidistant)
