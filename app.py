@@ -55,7 +55,7 @@ def index():
                 location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
                 location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
                 locations.extend([tuple(location3), tuple(location4)])
-            else
+            else:
                 logging.error("empty longitude as well as locations 3 and 4")
 
         logging.info(f"Locations: {locations}")
