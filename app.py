@@ -24,6 +24,8 @@ def index():
     # Define the variables with default values here
     filename_plate_carree = "default_PlateCarree.png"
     filename_azimuthal_equidistant = "default_AzimuthalEquidistant.png"
+
+    logging.info(f"request.method: {request.method}")
     
     if request.method == 'POST':
         logging.info('Received POST request')
@@ -41,7 +43,8 @@ def index():
             return "Location 1 or Location 2 were not provided in correct format"
 
         locations = [tuple(location1), tuple(location2)]
-
+        logging.info(f"locations: {locations}")
+        
         # Only fetch and plot the second pair of locations if checkbox is enabled
         if plot_second_pair == 'on':  # New condition for checkbox
             location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
@@ -52,6 +55,8 @@ def index():
                 location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
                 location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
                 locations.extend([tuple(location3), tuple(location4)])
+            else
+                logging.error("empty longitude as well as locations 3 and 4")
 
         logging.info(f"Locations: {locations}")
 
