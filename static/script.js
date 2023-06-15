@@ -1,11 +1,10 @@
 var spinner = document.getElementById('spinner');
 
-document.getElementById('locationsForm').addEventListener('submit', function(event) {
-    // Disable the submit button
-    this.querySelector('[type="submit"]').disabled = true;
-
-    // Show the spinner
-    spinner.style.display = "";
+document.getElementById('locationsForm').addEventListener('submit', function(e) {
+    document.getElementById('spinner').style.display = 'inline';
+    if(!document.getElementById('includeSecondPair').checked) {
+        document.getElementById('secondPair').style.display = 'none';
+    }
 });
 
 document.getElementById('includeSecondPair').addEventListener('change', function() {
