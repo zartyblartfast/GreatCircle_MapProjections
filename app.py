@@ -4,6 +4,7 @@ from map_generator import main as generate_map
 import cartopy.crs as ccrs
 import traceback
 import logging
+from datetime import datetime
 
 logging.basicConfig(filename='/home/zartyblartfast/GreatCircle_MapProjections/app.log', level=logging.DEBUG)
 
@@ -49,13 +50,18 @@ def index():
         logging.info(f"Locations: {locations}")
 
         try:
+            # Generate unique filenames based on time stamp
+            time_str = datetime.now().strftime("%Y%m%d%H%M%S")
+            filename_plate_carree = f"map_image_PlateCarree_{time_str}.png"
+            filename_azimuthal_equidistant = f"map_image_AzimuthalEquidistant_{time_str}.png"
+
             # For the first projection (PlateCarree)
             projection = ccrs.PlateCarree()
-            generate_map(projection, locations, "map_image_PlateCarree.png")
+            generate_map(projection, locations, filename_plate_carree)
 
             # For the second projection (AzimuthalEquidistant)
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
-            generate_map(projection, locations, "map_image_AzimuthalEquidistant.png")
+            generate_map(projection, locations, filename_azimuthal_equidistant)
 
             logging.info("Maps generated")
         except Exception as e:
@@ -71,16 +77,18 @@ def index():
             logging.error(f"Error during directory checks: {e}")
 
     # Add this line to print the current working directory to the webpage
-    return os.getcwd() + '<br>' + render_template('index.html')
+    return os.getcwd() + '<br>' + render_template('index.html', 
+                                                  filename_plate_carree=filename_plate_carree, 
+                                                  filename_azimuthal_equidistant=filename_azimuthal_equidistant)
 
-@app.route('/map1', methods=['GET'])
-def serve_map1():
-    image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', 'map_image_PlateCarree.png')
+@app.route('/map1/<filename>', methods=['GET'])
+def serve_map1(filename):
+    image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', filename)
     return send_file(image_path, mimetype='image/png')
 
-@app.route('/map2', methods=['GET'])
-def serve_map2():
-    image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', 'map_image_AzimuthalEquidistant.png')
+@app.route('/map2/<filename>', methods=['GET'])
+def serve_map2(filename):
+    image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', filename)
     return send_file(image_path, mimetype='image/png')
 
 if __name__ == "__main__":
