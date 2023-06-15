@@ -1,3 +1,45 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pyproj
+import cartopy.crs as ccrs
+import cartopy.mpl.gridliner as cgridliner
+import matplotlib.ticker as mticker
+from matplotlib import transforms as mtransforms
+
+def calculate_great_circle_points(lon1, lat1, lon2, lat2, num_points):
+    g = pyproj.Geod(ellps='WGS84')
+    lonlats = np.array(g.npts(lon1, lat1, lon2, lat2, num_points))
+    lonlats = np.vstack([[lon1, lat1], lonlats, [lon2, lat2]])  # Add start and end points
+    return lonlats
+
+def plot_great_circle(lonlats, ax, color='b', linewidth=2, zorder=3):
+    ax.plot(lonlats[:,0], lonlats[:,1], color, transform=ccrs.Geodetic(), linewidth=linewidth, zorder=zorder)
+    
+    # Calculate the great circle distance
+    g = pyproj.Geod(ellps='WGS84')
+    lon1, lat1 = lonlats[0]
+    lon2, lat2 = lonlats[-1]
+    az12, az21, dist = g.inv(lon1, lat1, lon2, lat2)
+    dist_km = dist/1000  # convert from meters to kilometers
+    
+    # Add distance text in the center of the line
+    center_index = len(lonlats) // 2
+    text_lon, text_lat = lonlats[center_index]
+    
+    # Small adjustments to the text coordinates to offset the text
+    text_lon += 5
+    text_lat += 5
+    
+    ax.text(text_lon, text_lat, f"{dist_km:.0f} km", transform=ccrs.Geodetic(), fontsize=10, ha='right', va='bottom', color=color)
+
+    return color  # Return the color code
+
+def plot_location_point(name, lon, lat, ax, color='r'):
+    ax.plot(lon, lat, 'o', transform=ccrs.Geodetic(), color=color, markersize=7)
+    ax.text(lon, lat, name, transform=ccrs.Geodetic(), fontsize=10, ha='right', va='bottom', color=color)
+
+    return color  # Return the color code
+
 def main(projection, locations, output_file):
     # Unpack the location details
     if len(locations) == 2:
