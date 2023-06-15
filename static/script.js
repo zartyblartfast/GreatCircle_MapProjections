@@ -21,7 +21,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
         updateSecondPairState();
     });
 
-    document.getElementById('locationsForm').addEventListener('submit', function(e) {
-        spinner.style.display = 'inline';
-    });
-
+    document.getElementById
