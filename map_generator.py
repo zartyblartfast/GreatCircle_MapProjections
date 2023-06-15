@@ -47,6 +47,8 @@ def main(projection, locations, output_file):
         location3 = location4 = None
     elif len(locations) == 4:
         location1, location2, location3, location4 = locations
+    else:
+        raise ValueError("locations must have length 2 or 4")
 
     # Calculate the great circle points
     lonlats1 = calculate_great_circle_points(location1[2], location1[1], location2[2], location2[1], 2000)
