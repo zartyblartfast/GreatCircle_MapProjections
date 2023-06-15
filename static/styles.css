@@ -34,7 +34,14 @@ td {
     margin-bottom: 20px;
 }
 
+p {
+    position: relative;
+}
+
 #spinner {
     width: 25px;
     height: 25px;
+    position: absolute;
+    vertical-align: middle;
 }
+
