@@ -11,13 +11,22 @@ document.getElementById('includeSecondPair').addEventListener('change', function
         inputs.forEach(function(input) {
             input.disabled = false;
         });
+        // Save checkbox state
+        localStorage.setItem('includeSecondPair', 'checked');
     } else {
         // Disable all inputs in second pair
         inputs.forEach(function(input) {
             input.disabled = true;
         });
+        // Save checkbox state
+        localStorage.setItem('includeSecondPair', '');
     }
 });
 
-// Trigger the change event at page load to apply correct state
-document.getElementById('includeSecondPair').dispatchEvent(new Event('change'));
+// Retrieve checkbox state and trigger the change event at page load to apply correct state
+window.onload = function() {
+    var isChecked = localStorage.getItem('includeSecondPair');
+    var checkbox = document.getElementById('includeSecondPair');
+    checkbox.checked = (isChecked === 'checked') ? true : false;
+    checkbox.dispatchEvent(new Event('change'));
+};
