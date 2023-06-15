@@ -5,43 +5,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     spinner.style.display = "none"; // Hide the spinner initially
 
-    // Retrieve checkbox state from local storage and update checkbox state
+    // Set the initial checkbox and second pair states.
     var isChecked = localStorage.getItem('includeSecondPair');
     if (isChecked === null) { // First visit
         includeSecondPair.checked = true;
         localStorage.setItem('includeSecondPair', 'checked');
     } else { // Returning visit
-        includeSecondPair.checked = (isChecked === 'checked') ? true : false;
+        includeSecondPair.checked = isChecked === 'checked';
     }
+    updateSecondPairState();
 
-    // Apply checkbox state to the visibility of the second pair
-    secondPair.style.display = includeSecondPair.checked ? "" : "none";
-    var inputs = secondPair.querySelectorAll('input');
-    inputs.forEach(function(input) {
-        input.disabled = !includeSecondPair.checked;
-    });
-
+    // When checkbox state changes, update the second pair state.
     includeSecondPair.addEventListener('change', function() {
-        if (this.checked) {
-            // Show second pair and enable all inputs
-            secondPair.style.display = "";
-            var inputs = secondPair.querySelectorAll('input');
-            inputs.forEach(function(input) {
-                input.disabled = false;
-            });
-            // Save checkbox state
-            localStorage.setItem('includeSecondPair', 'checked');
-        } else {
-            // Hide second pair and disable all inputs
-            secondPair.style.display = "none";
-            var inputs = secondPair.querySelectorAll('input');
-            inputs.forEach(function(input) {
-                input.disabled = true;
-            });
-            // Save checkbox state
-            localStorage.setItem('includeSecondPair', '');
-        }
+        localStorage.setItem('includeSecondPair', this.checked ? 'checked' : '');
+        updateSecondPairState();
     });
 
     document.getElementById('locationsForm').addEventListener('submit', function(e) {
         spinner.style.display = 'inline';
+    });
+
