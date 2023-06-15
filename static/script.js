@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var includeSecondPair = document.getElementById('includeSecondPair');
 
     spinner.style.display = "none"; // Hide the spinner initially
+    includeSecondPair.checked = true; // Check the checkbox initially
 
     // Always show the second pair on the initial load
     secondPair.style.display = "";
