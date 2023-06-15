@@ -63,7 +63,7 @@ def index():
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
             generate_map(projection, locations, filename_azimuthal_equidistant)
 
-            logging.info("Maps generated") #logging
+            logging.info("Maps generated")
         except Exception as e:
             logging.info("Error during map generation: %s", e)
             return str(e)
@@ -82,13 +82,14 @@ def index():
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
-    image_path = os.path.join('/home/zartyblartfast/', filename)
+    image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', filename)  # Changed path to include 'GreatCircle_MapProjections'
     return send_file(image_path, mimetype='image/png')
 
 @app.route('/map2/<filename>', methods=['GET'])
 def serve_map2(filename):
-    image_path = os.path.join('/home/zartyblartfast/', filename)
+    image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', filename)  # Changed path to include 'GreatCircle_MapProjections'
     return send_file(image_path, mimetype='image/png')
 
 if __name__ == "__main__":
     app.run(debug=True)
+
