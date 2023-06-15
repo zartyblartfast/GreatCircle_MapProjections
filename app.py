@@ -82,12 +82,12 @@ def index():
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
-    image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', filename)  # Changed path to include 'GreatCircle_MapProjections'
+    image_path = os.path.join('/home/zartyblartfast/', filename)  # Images are generated directly in /home/zartyblartfast/
     return send_file(image_path, mimetype='image/png')
 
 @app.route('/map2/<filename>', methods=['GET'])
 def serve_map2(filename):
-    image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', filename)  # Changed path to include 'GreatCircle_MapProjections'
+    image_path = os.path.join('/home/zartyblartfast/', filename)  # Images are generated directly in /home/zartyblartfast/
     return send_file(image_path, mimetype='image/png')
 
 if __name__ == "__main__":
