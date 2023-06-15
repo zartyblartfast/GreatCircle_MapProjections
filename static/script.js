@@ -5,15 +5,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     spinner.style.display = "none"; // Hide the spinner initially
 
-    // Always show the second pair on the initial load
+    // Always show the second pair and check the checkbox on initial load
     secondPair.style.display = "";
-
-    document.getElementById('locationsForm').addEventListener('submit', function(e) {
-        spinner.style.display = 'inline';
-        if (!includeSecondPair.checked) {
-            secondPair.style.display = 'none';
-        }
-    });
+    includeSecondPair.checked = true;
 
     includeSecondPair.addEventListener('change', function() {
         if (this.checked) {
@@ -23,8 +17,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             inputs.forEach(function(input) {
                 input.disabled = false;
             });
-            // Save checkbox state
-            localStorage.setItem('includeSecondPair', 'checked');
         } else {
             // Hide second pair and disable all inputs
             secondPair.style.display = "none";
@@ -32,18 +24,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
             inputs.forEach(function(input) {
                 input.disabled = true;
             });
-            // Save checkbox state
-            localStorage.setItem('includeSecondPair', '');
         }
     });
 
-    // Retrieve checkbox state from local storage and update checkbox state
-    var isChecked = localStorage.getItem('includeSecondPair');
-    includeSecondPair.checked = (isChecked === 'checked') ? true : false;
-
-    // If the page is being loaded for the first time, check the checkbox
-    if (isChecked === null) {
-        includeSecondPair.checked = true;
-        secondPair.style.display = "";
-    }
+    document.getElementById('locationsForm').addEventListener('submit', function(e) {
+        spinner.style.display = 'inline';
+        if (!includeSecondPair.checked) {
+            secondPair.style.display = 'none';
+        }
+    });
 });
