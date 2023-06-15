@@ -5,16 +5,19 @@ document.getElementById('locationsForm').addEventListener('submit', function() {
 
 document.getElementById('includeSecondPair').addEventListener('change', function() {
     var secondPair = document.getElementById('secondPair');
-    var inputs = secondPair.querySelectorAll('input');
     if (this.checked) {
-        // Enable all inputs in second pair
+        // Show second pair and enable all inputs
+        secondPair.style.display = "";
+        var inputs = secondPair.querySelectorAll('input');
         inputs.forEach(function(input) {
             input.disabled = false;
         });
         // Save checkbox state
         localStorage.setItem('includeSecondPair', 'checked');
     } else {
-        // Disable all inputs in second pair
+        // Hide second pair and disable all inputs
+        secondPair.style.display = "none";
+        var inputs = secondPair.querySelectorAll('input');
         inputs.forEach(function(input) {
             input.disabled = true;
         });
