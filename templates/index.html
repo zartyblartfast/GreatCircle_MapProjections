@@ -10,53 +10,57 @@
     <h1>Display Great Circles on Two Different Map Projections</h1>
     <p>This web page is designed to help people get a better understanding of great circles, which are the shortest paths between two points on the surface of a sphere, and map projections, which are methods for representing the surface of a sphere in two dimensions. We use Planet Earth as our example sphere. Learn more about <a href="https://example.com/great-circles">great circles</a> and <a href="https://example.com/map-projections">map projections</a>.</p>
     
-<form id="locationsForm" method="POST" action="/">
-    <fieldset>
-        <legend>First Pair of Locations</legend>
-        <table>
-            <tr>
-                <th>Location Name</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-            </tr>
-            <tr>
-                <td><input type="text" id="location1Name" name="location1Name" value="Tokyo_HND"></td>
-                <td><input type="text" id="location1Lat" name="location1Lat" value="35.5494N"></td>
-                <td><input type="text" id="location1Lon" name="location1Lon" value="139.7798E"></td>
-            </tr>
-            <tr>
-                <td><input type="text" id="location2Name" name="location2Name" value="London_LHR"></td>
-                <td><input type="text" id="location2Lat" name="location2Lat" value="51.4700N"></td>
-                <td><input type="text" id="location2Lon" name="location2Lon" value="0.4543W"></td>
-            </tr>
-        </table>
-    </fieldset>
+    <form id="locationsForm" method="POST" action="/">
+        <fieldset>
+            <legend>First Pair of Locations</legend>
+            <table>
+                <tr>
+                    <th>Location Name</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+                <tr>
+                    <td><input type="text" id="location1Name" name="location1Name" value="Tokyo_HND"></td>
+                    <td><input type="text" id="location1Lat" name="location1Lat" value="35.5494N"></td>
+                    <td><input type="text" id="location1Lon" name="location1Lon" value="139.7798E"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="location2Name" name="location2Name" value="London_LHR"></td>
+                    <td><input type="text" id="location2Lat" name="location2Lat" value="51.4700N"></td>
+                    <td><input type="text" id="location2Lon" name="location2Lon" value="0.4543W"></td>
+                </tr>
+            </table>
+        </fieldset>
 
-    <fieldset id="secondPair" hidden>
-        <legend>Second Pair of Locations</legend>
-        <table>
-            <tr>
-                <th>Location Name</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-            </tr>
-            <tr>
-                <td><input type="text" id="location3Name" name="location3Name" value="Cape_Town_CPT"></td>
-                <td><input type="text" id="location3Lat" name="location3Lat" value="33.9648S"></td>
-                <td><input type="text" id="location3Lon" name="location3Lon" value="18.6017E"></td>
-            </tr>
-            <tr>
-                <td><input type="text" id="location4Name" name="location4Name" value="Berlin_TXL"></td>
-                <td><input type="text" id="location4Lat" name="location4Lat" value="52.5580N"></td>
-                <td><input type="text" id="location4Lon" name="location4Lon" value="13.2880E"></td>
-            </tr>
-        </table>
-    </fieldset>
+        <fieldset id="secondPair" hidden>
+            <legend>Second Pair of Locations</legend>
+            <table>
+                <tr>
+                    <th>Location Name</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+                <tr>
+                    <td><input type="text" id="location3Name" name="location3Name" value="Cape_Town_CPT"></td>
+                    <td><input type="text" id="location3Lat" name="location3Lat" value="33.9648S"></td>
+                    <td><input type="text" id="location3Lon" name="location3Lon" value="18.6017E"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="location4Name" name="location4Name" value="Berlin_TXL"></td>
+                    <td><input type="text" id="location4Lat" name="location4Lat" value="52.5580N"></td>
+                    <td><input type="text" id="location4Lon" name="location4Lon" value="13.2880E"></td>
+                </tr>
+            </table>
+        </fieldset>
 
-    <p><button type="button" id="toggleSecondPair">Show/Hide Second Pair of Locations</button></p>
-    <p><button type="submit">Display Great Circles</button></p>
-</form>
-    
+        <p><button type="button" id="toggleSecondPair">Show/Hide Second Pair of Locations</button></p>
+        <p><button type="submit">Display Great Circles</button></p>
+    </form>
+
+    <!-- Add the img tags here -->
+    <img src="{{ url_for('serve_map1', filename=filename_plate_carree) }}" alt="PlateCarree projection" id="mapImage1">
+    <img src="{{ url_for('serve_map2', filename=filename_azimuthal_equidistant) }}" alt="AzimuthalEquidistant projection" id="mapImage2">
+        
     <div id="mapProjection1"></div>
     <div id="mapProjection2"></div>
 </body>
