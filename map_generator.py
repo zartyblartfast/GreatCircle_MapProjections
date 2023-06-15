@@ -44,7 +44,6 @@ def main(projection, locations, output_file):
         gl.ylocator = mticker.FixedLocator([-90, -60, -30, 0, 30, 60, 90])
     elif isinstance(projection, ccrs.AzimuthalEquidistant):
         gl = ax.gridlines(draw_labels=True)  # You might want to exclude labels in Azimuthal projection
-        gl.xlocator = mticker.FixedLocator(np.arange(-180, 180 and 1 reactions to previous messages in this conversation to keep things tidy.
         gl.xlocator = mticker.FixedLocator(np.arange(-180, 180, 30))
         gl.ylocator = mticker.FixedLocator(np.arange(-90, 90, 30))
 
