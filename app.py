@@ -63,7 +63,7 @@ def index():
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
             generate_map(projection, locations, filename_azimuthal_equidistant)
 
-            logging.info("Maps generated")
+            logging.info("Maps generated") #logging
         except Exception as e:
             logging.info("Error during map generation: %s", e)
             return str(e)
