@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var includeSecondPair = document.getElementById('includeSecondPair');
 
     spinner.style.display = "none"; // Hide the spinner initially
-    includeSecondPair.checked = true; // Check the checkbox initially
 
     // Always show the second pair on the initial load
     secondPair.style.display = "";
@@ -41,4 +40,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Retrieve checkbox state from local storage and update checkbox state
     var isChecked = localStorage.getItem('includeSecondPair');
     includeSecondPair.checked = (isChecked === 'checked') ? true : false;
+
+    // If the page is being loaded for the first time, check the checkbox
+    if (isChecked === null) {
+        includeSecondPair.checked = true;
+        secondPair.style.display = "";
+    }
 });
