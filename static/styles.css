@@ -42,6 +42,6 @@ p {
     width: 25px;
     height: 25px;
     position: absolute;
-    top: 45%;  /* Adjust this to move the spinner up or down */
+    top: 40%;  /* Adjust this to move the spinner up or down */
     transform: translateY(-50%);
 }
