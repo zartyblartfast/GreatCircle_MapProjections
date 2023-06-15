@@ -30,8 +30,7 @@ def index():
 
         location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
         location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
-        location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
-        location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
+        plot_second_pair = request.form.get('plotSecondPair')  # New line to fetch checkbox status
 
         location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
         location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
@@ -39,15 +38,17 @@ def index():
         if None in location1 or None in location2:
             return "Location 1 or Location 2 were not provided in correct format"
 
-        location3 = None
-        location4 = None
-        if location3_str[0] and location3_str[1] and location4_str[0] and location4_str[1]:
-            location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
-            location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
-
         locations = [tuple(location1), tuple(location2)]
-        if location3 and location4:
-            locations.extend([tuple(location3), tuple(location4)])
+
+        # Only fetch and plot the second pair of locations if checkbox is enabled
+        if plot_second_pair == 'on':  # New condition for checkbox
+            location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
+            location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
+            
+            if location3_str[0] and location3_str[1] and location4_str[0] and location4_str[1]:
+                location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
+                location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
+                locations.extend([tuple(location3), tuple(location4)])
 
         logging.info(f"Locations: {locations}")
 
@@ -81,13 +82,11 @@ def index():
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
-    #image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', filename)
     image_path = os.path.join('/home/zartyblartfast/', filename)
     return send_file(image_path, mimetype='image/png')
 
 @app.route('/map2/<filename>', methods=['GET'])
 def serve_map2(filename):
-    #image_path = os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', filename)
     image_path = os.path.join('/home/zartyblartfast/', filename)
     return send_file(image_path, mimetype='image/png')
 
