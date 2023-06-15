@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('locationsForm').addEventListener('submit', function(e) {
         spinner.style.display = 'inline';
+        if (!includeSecondPair.checked) {
+            secondPair.style.display = 'none';
+        }
     });
 
     includeSecondPair.addEventListener('change', function() {
@@ -36,4 +39,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Retrieve checkbox state from local storage and update checkbox state
     var isChecked = localStorage.getItem('includeSecondPair');
-    includeSecondPair.checked
+    includeSecondPair.checked = (isChecked === 'checked') ? true : false;
+});
