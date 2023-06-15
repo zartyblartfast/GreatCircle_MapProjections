@@ -42,6 +42,7 @@ p {
     width: 25px;
     height: 25px;
     position: absolute;
-    vertical-align: middle;
+    top: 50%;
+    left: 210px; /* adjust this value as needed */
+    transform: translateY(-50%);
 }
-
