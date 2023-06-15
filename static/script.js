@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+document.addEventListener('DOMContentLoaded', (event) => {
     var spinner = document.getElementById('spinner');
     var secondPair = document.getElementById('secondPair');
     var includeSecondPair = document.getElementById('includeSecondPair');
@@ -36,5 +36,4 @@ window.addEventListener('load', function() {
 
     // Retrieve checkbox state from local storage and update checkbox state
     var isChecked = localStorage.getItem('includeSecondPair');
-    includeSecondPair.checked = (isChecked === 'checked') ? true : false;
-});
+    includeSecondPair.checked
