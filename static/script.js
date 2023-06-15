@@ -29,8 +29,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('locationsForm').addEventListener('submit', function(e) {
         spinner.style.display = 'inline';
-        if (!includeSecondPair.checked) {
-            secondPair.style.display = 'none';
-        }
     });
 });
