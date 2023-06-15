@@ -31,11 +31,13 @@ def index():
         location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
         location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
         plot_second_pair = request.form.get('plotSecondPair')  # New line to fetch checkbox status
-
+        logging.info(f"plot_second_pair: {plot_second_pair}")
+        
         location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
         location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
 
         if None in location1 or None in location2:
+            logging.info("Location 1 or Location 2 were not provided in correct format")
             return "Location 1 or Location 2 were not provided in correct format"
 
         locations = [tuple(location1), tuple(location2)]
@@ -66,7 +68,7 @@ def index():
 
             logging.info("Maps generated")
         except Exception as e:
-            logging.info("Error during map generation: %s", e)
+            logging.exception("Error during map generation: %s", e)
             return str(e)
         
         logging.info("After map generation")
