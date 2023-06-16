@@ -45,7 +45,7 @@ def index():
         location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
         location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
 
-        if None in location1 or None in location2 or "" in location1_str[0] or "" in location1_str[1] or "" in location1_str[2] or "" in location2_str[0] or "" in location2_str[1] or "" in location2_str[2]:
+        if None in location1 or None in location2 or "" in location1_str or "" in location2_str:
             logging.error("Location 1 or Location 2 were not provided in correct format")
             return "Location 1 or Location 2 were not provided in correct format"
 
@@ -58,7 +58,7 @@ def index():
             location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
             location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
 
-            if None in location3 or None in location4 or "" in location3_str[0] or "" in location3_str[1] or "" in location3_str[2] or "" in location4_str[0] or "" in location4_str[1] or "" in location4_str[2]:
+            if None in location3 or None in location4 or "" in location3_str or "" in location4_str:
                 logging.error("Location 3 or Location 4 were not provided in correct format")
                 return "Location 3 or Location 4 were not provided in correct format"
             
