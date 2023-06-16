@@ -28,10 +28,10 @@ def index():
     filename_plate_carree = "default_PlateCarree.png"
     filename_azimuthal_equidistant = "default_AzimuthalEquidistant.png"
 
-    location1_str = ["", "0", "0"]
-    location2_str = ["", "0", "0"]
-    location3_str = ["", "0", "0"]
-    location4_str = ["", "0", "0"]
+    location1_str = ["", "", ""]
+    location2_str = ["", "", ""]
+    location3_str = ["", "", ""]
+    location4_str = ["", "", ""]
 
     plot_second_pair = False
 
