@@ -29,6 +29,11 @@ def index():
     # Define the variables with default values here
     filename_plate_carree = "default_PlateCarree.png"
     filename_azimuthal_equidistant = "default_AzimuthalEquidistant.png"
+    location1_str = ["", "", ""]
+    location2_str = ["", "", ""]
+    location3_str = ["", "", ""]
+    location4_str = ["", "", ""]
+    plot_second_pair = None
 
     logging.info(f"request.method: {request.method}")
     
@@ -91,7 +96,12 @@ def index():
 
     return os.getcwd() + '<br>' + render_template('index.html', 
                                                   filename_plate_carree=filename_plate_carree, 
-                                                  filename_azimuthal_equidistant=filename_azimuthal_equidistant)
+                                                  filename_azimuthal_equidistant=filename_azimuthal_equidistant,
+                                                  location1=location1_str,
+                                                  location2=location2_str,
+                                                  location3=location3_str,
+                                                  location4=location4_str,
+                                                  plot_second_pair=plot_second_pair)
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
