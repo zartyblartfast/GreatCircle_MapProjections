@@ -33,7 +33,7 @@ def index():
     location2_str = ["", "", ""]
     location3_str = ["", "", ""]
     location4_str = ["", "", ""]
-    plot_second_pair = None
+    plot_second_pair = False  # Set default as False
 
     logging.info(f"request.method: {request.method}")
     
@@ -42,7 +42,7 @@ def index():
 
         location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
         location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
-        plot_second_pair = request.form.get('plotSecondPair')  # New line to fetch checkbox status
+        plot_second_pair = 'plotSecondPair' in request.form  # Fetch checkbox status and convert it to Boolean
         logging.info(f"plot_second_pair: {plot_second_pair}")
         
         location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
