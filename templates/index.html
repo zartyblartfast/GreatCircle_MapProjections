@@ -13,6 +13,12 @@
     <form id="locationsForm" method="POST" action="/">
         <fieldset>
             <legend>First Pair of Locations</legend>
+            <div>
+                <label for="dropdown1">Select Example Location Pair 1:</label>
+                <select id="dropdown1">
+                    <option value="" selected="selected">Choose a pair</option>
+                </select>
+            </div>
             <table>
                 <tr>
                     <th>Location Name</th>
@@ -20,20 +26,26 @@
                     <th>Longitude</th>
                 </tr>
                 <tr>
-                    <td><input type="text" id="location1Name" name="location1Name" value="Tokyo_HND"></td>
-                    <td><input type="text" id="location1Lat" name="location1Lat" value="35.5494N"></td>
-                    <td><input type="text" id="location1Lon" name="location1Lon" value="139.7798E"></td>
+                    <td><input type="text" id="location1Name" name="location1Name"></td>
+                    <td><input type="text" id="latitude1" name="location1Lat"></td>
+                    <td><input type="text" id="longitude1" name="location1Lon"></td>
                 </tr>
                 <tr>
-                    <td><input type="text" id="location2Name" name="location2Name" value="London_LHR"></td>
-                    <td><input type="text" id="location2Lat" name="location2Lat" value="51.4700N"></td>
-                    <td><input type="text" id="location2Lon" name="location2Lon" value="0.4543W"></td>
+                    <td><input type="text" id="location2Name" name="location2Name"></td>
+                    <td><input type="text" id="latitude2" name="location2Lat"></td>
+                    <td><input type="text" id="longitude2" name="location2Lon"></td>
                 </tr>
             </table>
         </fieldset>
 
         <fieldset id="secondPair">
             <legend>Second Pair of Locations</legend>
+            <div>
+                <label for="dropdown2">Select Example Location Pair 2:</label>
+                <select id="dropdown2">
+                    <option value="" selected="selected">Choose a pair</option>
+                </select>
+            </div>
             <table>
                 <tr>
                     <th>Location Name</th>
@@ -41,14 +53,14 @@
                     <th>Longitude</th>
                 </tr>
                 <tr>
-                    <td><input type="text" id="location3Name" name="location3Name" value="Cape_Town_CPT"></td>
-                    <td><input type="text" id="location3Lat" name="location3Lat" value="33.9648S"></td>
-                    <td><input type="text" id="location3Lon" name="location3Lon" value="18.6017E"></td>
+                    <td><input type="text" id="location3Name" name="location3Name"></td>
+                    <td><input type="text" id="latitude3" name="location3Lat"></td>
+                    <td><input type="text" id="longitude3" name="location3Lon"></td>
                 </tr>
                 <tr>
-                    <td><input type="text" id="location4Name" name="location4Name" value="Hobart_HBA"></td>
-                    <td><input type="text" id="location4Lat" name="location4Lat" value="42.8364S"></td>
-                    <td><input type="text" id="location4Lon" name="location4Lon" value="147.5075E"></td>
+                    <td><input type="text" id="location4Name" name="location4Name"></td>
+                    <td><input type="text" id="latitude4" name="location4Lat"></td>
+                    <td><input type="text" id="longitude4" name="location4Lon"></td>
                 </tr>
             </table>
         </fieldset>
@@ -67,4 +79,4 @@
     <div id="mapProjection2"></div>
 </body>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
-</html>
+</html>  
