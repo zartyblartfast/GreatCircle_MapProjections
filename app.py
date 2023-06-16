@@ -64,8 +64,8 @@ def index():
             
             locations.extend([tuple(location3), tuple(location4)])
         else:
-            location3_str = ["", "0", "0"]
-            location4_str = ["", "0", "0"]
+            location3_str = ["", "", ""]
+            location4_str = ["", "", ""]
 
         try:
             time_str = datetime.now().strftime("%Y%m%d%H%M%S")
