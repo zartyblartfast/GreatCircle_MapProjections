@@ -42,8 +42,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 let selectedPair = data[selectedPairIndex];
 
                 // Update input fields for the first pair
+                document.getElementById('location1Name').value = selectedPair.location1.name;
                 document.getElementById('latitude1').value = selectedPair.location1.latitude;
                 document.getElementById('longitude1').value = selectedPair.location1.longitude;
+                document.getElementById('location2Name').value = selectedPair.location2.name;
                 document.getElementById('latitude2').value = selectedPair.location2.latitude;
                 document.getElementById('longitude2').value = selectedPair.location2.longitude;
             });
@@ -53,8 +55,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 let selectedPair = data[selectedPairIndex];
 
                 // Update input fields for the second pair
+                document.getElementById('location3Name').value = selectedPair.location1.name;
                 document.getElementById('latitude3').value = selectedPair.location1.latitude;
                 document.getElementById('longitude3').value = selectedPair.location1.longitude;
+                document.getElementById('location4Name').value = selectedPair.location2.name;
                 document.getElementById('latitude4').value = selectedPair.location2.latitude;
                 document.getElementById('longitude4').value = selectedPair.location2.longitude;
             });
