@@ -11,13 +11,18 @@ logging.basicConfig(filename='/home/zartyblartfast/GreatCircle_MapProjections/ap
 app = Flask(__name__)
 
 def convert_coord(coord_str):
-    if not coord_str[-1].upper() in ('N', 'S', 'E', 'W'):
+    try:
+        if coord_str[-1].upper() in ('N', 'S', 'E', 'W'):
+            direction = coord_str[-1].upper()
+            coord = float(coord_str[:-1])
+            if direction in ('S', 'W'):
+                coord *= -1  # Switch to negative for S and W
+        else:
+            coord = float(coord_str)
+    except ValueError:
         return None
-    direction = coord_str[-1].upper()
-    coord = float(coord_str[:-1])
-    if direction in ('S', 'W'):
-        coord *= -1  # Switch to negative for S and W
     return coord
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
