@@ -18,6 +18,8 @@
                 <select id="dropdown1">
                     <option value="" selected="selected">Choose a pair</option>
                 </select>
+                <input type="checkbox" id="includeFirstPair" name="plotFirstPair" {% if plot_first_pair %} checked {% endif %}>
+                <label for="includeFirstPair">Include First Pair of Locations</label>
             </div>
             <table>
                 <tr>
@@ -45,6 +47,8 @@
                 <select id="dropdown2">
                     <option value="" selected="selected">Choose a pair</option>
                 </select>
+                <input type="checkbox" id="includeSecondPair" name="plotSecondPair" {% if plot_second_pair %} checked {% endif %} disabled>
+                <label for="includeSecondPair">Include Second Pair of Locations</label>
             </div>
             <table>
                 <tr>
@@ -64,19 +68,12 @@
                 </tr>
             </table>
         </fieldset>
-
-        <p><label for="includeSecondPair">Include Second Pair of Locations</label> <input type="checkbox" id="includeSecondPair" name="plotSecondPair" {% if plot_second_pair %} checked {% endif %}>
-            
-        <p><button type="submit">Display Great Circles</button><img src="{{ url_for('static', filename='globe-joypixels.gif') }}" id="spinner" style="display: none"></p>
-
+        <button type="submit" id="submitButton">Display Great Circles on Maps</button>
     </form>
-
-    <!-- Add the img tags here -->
-    <img src="{{ url_for('serve_map1', filename=filename_plate_carree) }}" alt="PlateCarree projection" id="mapImage1">
-    <img src="{{ url_for('serve_map2', filename=filename_azimuthal_equidistant) }}" alt="AzimuthalEquidistant projection" id="mapImage2">
-        
-    <div id="mapProjection1"></div>
-    <div id="mapProjection2"></div>
+    
+    <h2>Plate Carrée Projection</h2>
+    <img src="{{url_for('static', filename=filename_plate_carree)}}">
+    <h2>Azimuthal Equidistant Projection</h2>
+    <img src="{{url_for('static', filename=filename_azimuthal_equidistant)}}">
 </body>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
 </html>
