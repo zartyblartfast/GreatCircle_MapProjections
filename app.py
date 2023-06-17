@@ -40,7 +40,8 @@ def index():
 
         location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
         location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
-        plot_second_pair = 'plotSecondPair' in request.form
+        #plot_second_pair = 'plotSecondPair' in request.form
+        plot_second_pair = True
 
         location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
         location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
