@@ -83,4 +83,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 // Update input fields for the second pair
                 document.getElementById('location3Name').value = selectedPair.location1.name;
-                document.getElementById('latitude
+                document.getElementById('latitude3').value = selectedPair.location1.latitude;
+                document.getElementById('longitude3').value = selectedPair.location1.longitude;
+                document.getElementById('location4Name').value = selectedPair.location2.name;
+                document.getElementById('latitude4').value = selectedPair.location2.latitude;
+                document.getElementById('longitude4').value = selectedPair.location2.longitude;
+            });
+        });
+
+    document.getElementById('locationsForm').addEventListener('submit', function(e) {
+        spinner.style.display = 'inline';
+        // Disable the submit button when the form is submitted
+        submitButton.disabled = true;
+    });
+
+    // Enable the submit button when both images have finished loading
+    function enableButton() {
+        if (img1.complete && img2.complete) {
+            submitButton.disabled = false;
+            spinner.style.display = 'none';
+        }
+    }
+
+    // Add event listeners to the image load events
+    img1.addEventListener('load', enableButton);
+    img2.addEventListener('load', enableButton);
+});
