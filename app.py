@@ -83,14 +83,22 @@ def index():
             logging.exception("Error during map generation: %s", e)
             return str(e)
 
+    #return render_template('index.html',
+    #                       filename_plate_carree=filename_plate_carree,
+    #                       filename_azimuthal_equidistant=filename_azimuthal_equidistant,
+    #                       location1=location1_str,
+    #                       location2=location2_str,
+    #                       location3=location3_str,
+    #                       location4=location4_str,
+    #                       plot_second_pair=plot_second_pair)
     return render_template('index.html',
-                           filename_plate_carree=filename_plate_carree,
-                           filename_azimuthal_equidistant=filename_azimuthal_equidistant,
-                           location1=location1_str,
-                           location2=location2_str,
-                           location3=location3_str,
-                           location4=location4_str,
-                           plot_second_pair=plot_second_pair)
+                        filename_plate_carree=url_for('serve_map1', filename=filename_plate_carree) if filename_plate_carree else None,
+                        filename_azimuthal_equidistant=url_for('serve_map2', filename=filename_azimuthal_equidistant) if filename_azimuthal_equidistant else None,
+                        location1=location1_str,
+                        location2=location2_str,
+                        location3=location3_str,
+                        location4=location4_str,
+                        plot_second_pair=plot_second_pair)
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
