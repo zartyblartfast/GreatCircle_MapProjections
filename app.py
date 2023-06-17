@@ -71,24 +71,17 @@ def index():
             time_str = datetime.now().strftime("%Y%m%d%H%M%S")
             filename_plate_carree = f"map_image_PlateCarree_{time_str}.png"
             filename_azimuthal_equidistant = f"map_image_AzimuthalEquidistant_{time_str}.png"
-        
+
             projection = ccrs.PlateCarree()
             generate_map(projection, locations, filename_plate_carree)
-        
-            if plot_second_pair:
-                generate_map(projection, locations[2:], filename_plate_carree)
-        
+
             projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
             generate_map(projection, locations, filename_azimuthal_equidistant)
-        
-            if plot_second_pair:
-                generate_map(projection, locations[2:], filename_azimuthal_equidistant)
-        
+
             logging.info("Maps generated")
         except Exception as e:
             logging.exception("Error during map generation: %s", e)
             return str(e)
-
 
     return render_template('index.html',
                            filename_plate_carree=filename_plate_carree,
