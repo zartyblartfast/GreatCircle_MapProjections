@@ -4,7 +4,6 @@ import pyproj
 import cartopy.crs as ccrs
 import cartopy.mpl.gridliner as cgridliner
 import matplotlib.ticker as mticker
-from matplotlib import transforms as mtransforms
 
 def calculate_great_circle_points(lon1, lat1, lon2, lat2, num_points):
     g = pyproj.Geod(ellps='WGS84')
@@ -41,20 +40,14 @@ def plot_location_point(name, lon, lat, ax, color='r'):
     return color  # Return the color code
 
 def main(projection, locations, output_file):
-    # Unpack the location details
-    if len(locations) == 2:
-        location1, location2 = locations
-        location3 = location4 = None
-    elif len(locations) == 4:
-        location1, location2, location3, location4 = locations
-    else:
+    if len(locations) != 2 and len(locations) != 4:
         raise ValueError("locations must have length 2 or 4")
 
     # Calculate the great circle points
-    lonlats1 = calculate_great_circle_points(location1[2], location1[1], location2[2], location2[1], 2000)
+    lonlats1 = calculate_great_circle_points(locations[0][2], locations[0][1], locations[1][2], locations[1][1], 2000)
     
-    if location3 and location4:
-        lonlats2 = calculate_great_circle_points(location3[2], location3[1], location4[2], location4[1], 2000)
+    if len(locations) == 4:
+        lonlats2 = calculate_great_circle_points(locations[2][2], locations[2][1], locations[3][2], locations[3][1], 2000)
 
     # Create the map
     fig = plt.figure(figsize=(10, 10))
@@ -65,16 +58,16 @@ def main(projection, locations, output_file):
     # Plot the great circles and get their colors
     color1 = plot_great_circle(lonlats1, ax, color='b', linewidth=2, zorder=3)
     
-    if location3 and location4:
+    if len(locations) == 4:
         color2 = plot_great_circle(lonlats2, ax, color='r', linewidth=2, zorder=3)
 
     # Plot the location points
-    plot_location_point(location1[0], location1[2], location1[1], ax, color=color1)
-    plot_location_point(location2[0], location2[2], location2[1], ax, color=color1)
+    plot_location_point(locations[0][0], locations[0][2], locations[0][1], ax, color=color1)
+    plot_location_point(locations[1][0], locations[1][2], locations[1][1], ax, color=color1)
     
-    if location3 and location4:
-        plot_location_point(location3[0], location3[2], location3[1], ax, color=color2)
-        plot_location_point(location4[0], location4[2], location4[1], ax, color=color2)
+    if len(locations) == 4:
+        plot_location_point(locations[2][0], locations[2][2], locations[2][1], ax, color=color2)
+        plot_location_point(locations[3][0], locations[3][2], locations[3][1], ax, color=color2)
 
     ax.set_global()
 
