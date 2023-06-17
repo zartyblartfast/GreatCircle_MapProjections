@@ -64,11 +64,7 @@
                 </tr>
             </table>
         </fieldset>
-
-        <p><label for="includeSecondPair">Include Second Pair of Locations</label> <input type="checkbox" id="includeSecondPair" name="plotSecondPair" {% if plot_second_pair %} checked {% endif %}>
-            
-        <p><button type="submit">Display Great Circles</button><img src="{{ url_for('static', filename='globe-joypixels.gif') }}" id="spinner" style="display: none"></p>
-
+        <p><input type="submit" value="Generate Maps"></p>
     </form>
 
     <!-- Add the img tags here -->
