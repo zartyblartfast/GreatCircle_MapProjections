@@ -6,8 +6,34 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var submitButton = document.querySelector('button[type="submit"]');
     var img1 = document.getElementById('mapImage1');
     var img2 = document.getElementById('mapImage2');
+    var pair1Checkbox = document.getElementById('pair1Checkbox');
+    var pair2Checkbox = document.getElementById('pair2Checkbox');
 
     spinner.style.display = "none"; // Hide the spinner initially
+
+    // Function to handle form and image visibility
+    function handleVisibility(checkbox, fieldset, image) {
+        if (checkbox.checked) {
+            fieldset.style.display = 'block';
+            image.style.display = 'block';
+        } else {
+            fieldset.style.display = 'none';
+            image.style.display = 'none';
+        }
+    }
+
+    // Initial visibility setup
+    handleVisibility(pair1Checkbox, secondPair, img1);
+    handleVisibility(pair2Checkbox, secondPair, img2);
+
+    // Listen for checkbox changes
+    pair1Checkbox.addEventListener('change', function() {
+        handleVisibility(pair1Checkbox, secondPair, img1);
+    });
+
+    pair2Checkbox.addEventListener('change', function() {
+        handleVisibility(pair2Checkbox, secondPair, img2);
+    });
 
     // Fetch the locations.json file
     fetch('/static/locations.json')
