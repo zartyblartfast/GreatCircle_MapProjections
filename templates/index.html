@@ -1,82 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display Great Circles on Two Different Map Projections</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Map Generator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="static/scripts.js"></script>
 </head>
 <body>
-    <h1>Display Great Circles on Two Different Map Projections</h1>
-    <p>This web page is designed to help people get a better understanding of great circles, which are the shortest paths between two points on the surface of a sphere, and map projections, which are methods for representing the surface of a sphere in two dimensions. We use Planet Earth as our example sphere. Learn more about <a href="https://example.com/great-circles">great circles</a> and <a href="https://example.com/map-projections">map projections</a>.</p>
-    
-    <form id="locationsForm" method="POST" action="/">
+    <form method="POST">
         <fieldset>
             <legend>First Pair of Locations</legend>
-            <div>
-                <label for="dropdown1">Select Example Location Pair 1:</label>
-                <select id="dropdown1">
-                    <option value="" selected="selected">Choose a pair</option>
-                </select>
-            </div>
-            <table>
-                <tr>
-                    <th>Location Name</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                </tr>
-                <tr>
-                    <td><input type="text" id="location1Name" name="location1Name" value="{{location1[0]}}"></td>
-                    <td><input type="text" id="latitude1" name="location1Lat" value="{{location1[1]}}"></td>
-                    <td><input type="text" id="longitude1" name="location1Lon" value="{{location1[2]}}"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" id="location2Name" name="location2Name" value="{{location2[0]}}"></td>
-                    <td><input type="text" id="latitude2" name="location2Lat" value="{{location2[1]}}"></td>
-                    <td><input type="text" id="longitude2" name="location2Lon" value="{{location2[2]}}"></td>
-                </tr>
-            </table>
+            <input type="checkbox" id="includeFirstPair" name="includeFirstPair" checked>
+            <label for="includeFirstPair">Include this pair in map</label>
+            <input type="text" id="location1Name" name="location1Name" placeholder="Location 1 Name" value="{{location1[0]}}">
+            <input type="text" id="location1Lat" name="location1Lat" placeholder="Location 1 Latitude" value="{{location1[1]}}">
+            <input type="text" id="location1Lon" name="location1Lon" placeholder="Location 1 Longitude" value="{{location1[2]}}">
+            <input type="text" id="location2Name" name="location2Name" placeholder="Location 2 Name" value="{{location2[0]}}">
+            <input type="text" id="location2Lat" name="location2Lat" placeholder="Location 2 Latitude" value="{{location2[1]}}">
+            <input type="text" id="location2Lon" name="location2Lon" placeholder="Location 2 Longitude" value="{{location2[2]}}">
         </fieldset>
-
         <fieldset id="secondPair">
             <legend>Second Pair of Locations</legend>
-            <div>
-                <label for="dropdown2">Select Example Location Pair 2:</label>
-                <select id="dropdown2">
-                    <option value="" selected="selected">Choose a pair</option>
-                </select>
-            </div>
-            <table>
-                <tr>
-                    <th>Location Name</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                </tr>
-                <tr>
-                    <td><input type="text" id="location3Name" name="location3Name" value="{{location3[0]}}"></td>
-                    <td><input type="text" id="latitude3" name="location3Lat" value="{{location3[1]}}"></td>
-                    <td><input type="text" id="longitude3" name="location3Lon" value="{{location3[2]}}"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" id="location4Name" name="location4Name" value="{{location4[0]}}"></td>
-                    <td><input type="text" id="latitude4" name="location4Lat" value="{{location4[1]}}"></td>
-                    <td><input type="text" id="longitude4" name="location4Lon" value="{{location4[2]}}"></td>
-                </tr>
-            </table>
+            <input type="checkbox" id="includeSecondPair" name="includeSecondPair">
+            <label for="includeSecondPair">Include this pair in map</label>
+            <input type="text" id="location3Name" name="location3Name" placeholder="Location 3 Name" value="{{location3[0]}}">
+            <input type="text" id="location3Lat" name="location3Lat" placeholder="Location 3 Latitude" value="{{location3[1]}}">
+            <input type="text" id="location3Lon" name="location3Lon" placeholder="Location 3 Longitude" value="{{location3[2]}}">
+            <input type="text" id="location4Name" name="location4Name" placeholder="Location 4 Name" value="{{location4[0]}}">
+            <input type="text" id="location4Lat" name="location4Lat" placeholder="Location 4 Latitude" value="{{location4[1]}}">
+            <input type="text" id="location4Lon" name="location4Lon" placeholder="Location 4 Longitude" value="{{location4[2]}}">
         </fieldset>
-
-        <p><label for="includeSecondPair">Include Second Pair of Locations</label> <input type="checkbox" id="includeSecondPair" name="plotSecondPair" {% if plot_second_pair %} checked {% endif %}>
-            
-        <p><button type="submit">Display Great Circles</button><img src="{{ url_for('static', filename='globe-joypixels.gif') }}" id="spinner" style="display: none"></p>
-
+        <input type="submit" value="Generate Maps">
     </form>
-
-    <!-- Add the img tags here -->
-    <img src="{{ url_for('serve_map1', filename=filename_plate_carree) }}" alt="PlateCarree projection" id="mapImage1">
-    <img src="{{ url_for('serve_map2', filename=filename_azimuthal_equidistant) }}" alt="AzimuthalEquidistant projection" id="mapImage2">
-        
-    <div id="mapProjection1"></div>
-    <div id="mapProjection2"></div>
+    <img id="map_plate_carree" src="/map/{{filename_plate_carree}}">
+    <img id="map_azimuthal_equidistant" src="/map/{{filename_azimuthal_equidistant}}">
 </body>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
 </html>
