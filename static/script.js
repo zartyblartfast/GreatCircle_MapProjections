@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     var spinner = document.getElementById('spinner');
+    var firstPair = document.getElementById('firstPair');
     var secondPair = document.getElementById('secondPair');
     var dropdown1 = document.getElementById('dropdown1');
     var dropdown2 = document.getElementById('dropdown2');
@@ -22,24 +23,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
             return;
         }
         if (checkbox.checked) {
-            fieldset.style.display = "block";
+            fieldset.disabled = false;
         } else {
-            fieldset.style.display = "none";
+            fieldset.disabled = true;
         }
     }
 
-
     // Initial visibility setup
-    handleVisibility(pair1Checkbox, secondPair, img1);
-    handleVisibility(pair2Checkbox, secondPair, img2);
+    handleVisibility(pair1Checkbox, firstPair);
+    handleVisibility(pair2Checkbox, secondPair);
 
     // Listen for checkbox changes
     pair1Checkbox.addEventListener('change', function() {
-        handleVisibility(pair1Checkbox, secondPair, img1);
+        handleVisibility(pair1Checkbox, firstPair);
     });
 
     pair2Checkbox.addEventListener('change', function() {
-        handleVisibility(pair2Checkbox, secondPair, img2);
+        handleVisibility(pair2Checkbox, secondPair);
     });
 
     // Fetch the locations.json file
