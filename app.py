@@ -33,14 +33,13 @@ def index():
     location3_str = ["", "", ""]
     location4_str = ["", "", ""]
 
-    plot_second_pair = False
+    plot_second_pair = True
 
     if request.method == 'POST':
         logging.info('Received POST request')
 
         location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
         location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
-        plot_second_pair = 'plotSecondPair' in request.form
         
         location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
         location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
@@ -63,9 +62,6 @@ def index():
                 return "Location 3 or Location 4 were not provided in correct format"
             
             locations.extend([tuple(location3), tuple(location4)])
-        else:
-            location3_str = ["", "", ""]
-            location4_str = ["", "", ""]
 
         try:
             time_str = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -89,8 +85,7 @@ def index():
                                                   location1=location1_str,
                                                   location2=location2_str,
                                                   location3=location3_str,
-                                                  location4=location4_str,
-                                                  plot_second_pair=plot_second_pair)
+                                                  location4=location4_str)
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
@@ -103,4 +98,4 @@ def serve_map2(filename):
     return send_file(image_path, mimetype='image/png')
 
 if __name__ == "__main__":
-    app.run(debug=True) 
+    app.run(debug=True)
