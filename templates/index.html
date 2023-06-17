@@ -68,10 +68,6 @@
         <p><button type="submit">Display Great Circles</button><img src="{{ url_for('static', filename='globe-joypixels.gif') }}" id="spinner" style="display: none"></p>
 
     </form>
-
-    <!-- Add the img tags here -->
-    <img src="{{ url_for('serve_map1', filename=filename_plate_carree) }}" alt="PlateCarree projection" id="mapImage1">
-    <img src="{{ url_for('serve_map2', filename=filename_azimuthal_equidistant) }}" alt="AzimuthalEquidistant projection" id="mapImage2">
         
     <div id="mapProjection1"></div>
     <div id="mapProjection2"></div>
