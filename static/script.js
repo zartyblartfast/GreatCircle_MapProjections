@@ -33,11 +33,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     handleVisibility(pair1Checkbox, firstPair);
     handleVisibility(pair2Checkbox, secondPair);
 
-    // Listen for checkbox changes
-    pair1Checkbox.addEventListener('change', function() {
-        handleVisibility(pair1Checkbox, firstPair);
-    });
+    // Function to enable or disable the second pair of locations
+    function enableSecondPair() {
+        pair2Checkbox.disabled = !pair1Checkbox.checked;
+        handleVisibility(pair2Checkbox, secondPair);
+    }
 
+    // Add event listeners to the checkboxes
+    pair1Checkbox.addEventListener('change', enableSecondPair);
     pair2Checkbox.addEventListener('change', function() {
         handleVisibility(pair2Checkbox, secondPair);
     });
@@ -80,36 +83,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 // Update input fields for the second pair
                 document.getElementById('location3Name').value = selectedPair.location1.name;
-                document.getElementById('latitude3').value = selectedPair.location1.latitude;
-                document.getElementById('longitude3').value = selectedPair.location1.longitude;
-                document.getElementById('location4Name').value = selectedPair.location2.name;
-                document.getElementById('latitude4').value = selectedPair.location2.latitude;
-                document.getElementById('longitude4').value = selectedPair.location2.longitude;
-            });
-        });
-
-    // Function to enable or disable the second pair of locations based on the first pair's checkbox
-    function enableSecondPair() {
-        if (pair1Checkbox.checked) {
-            handleVisibility(pair2Checkbox, secondPair);
-        } else {
-            pair2Checkbox.checked = false;
-            handleVisibility(pair2Checkbox, secondPair);
-        }
-    }
-
-    // Add event listener to the first pair's checkbox to handle the visibility of the second pair
-    pair1Checkbox.addEventListener('change', enableSecondPair);
-
-    // Enable the submit button when both images have finished loading
-    function enableButton() {
-        if (img1.complete && img2.complete) {
-            submitButton.disabled = false;
-            spinner.style.display = 'none';
-        }
-    }
-
-    // Add event listeners to the image load events
-    img1.addEventListener('load', enableButton);
-    img2.addEventListener('load', enableButton);
-});
+                document.getElementById('latitude
