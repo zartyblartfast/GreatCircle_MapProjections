@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var secondPair = document.getElementById('secondPair');
     var dropdown1 = document.getElementById('dropdown1');
     var dropdown2 = document.getElementById('dropdown2');
+    var submitButton = document.querySelector('button[type="submit"]');
+    var img1 = document.getElementById('mapImage1');
+    var img2 = document.getElementById('mapImage2');
 
     spinner.style.display = "none"; // Hide the spinner initially
 
@@ -54,5 +57,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('locationsForm').addEventListener('submit', function(e) {
         spinner.style.display = 'inline';
+        // Disable the submit button when the form is submitted
+        submitButton.disabled = true;
     });
+
+    // Enable the submit button when both images have finished loading
+    function enableButton() {
+        if (img1.complete && img2.complete) {
+            submitButton.disabled = false;
+            spinner.style.display = 'none';
+        }
+    }
+
+    // Add event listeners to the image load events
+    img1.addEventListener('load', enableButton);
+    img2.addEventListener('load', enableButton);
 });
