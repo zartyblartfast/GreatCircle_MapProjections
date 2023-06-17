@@ -33,56 +33,55 @@ def index():
     location3_str = ["", "", ""]
     location4_str = ["", "", ""]
 
-    include_first_pair = False
-    include_second_pair = False
+    plot_second_pair = False
 
     if request.method == 'POST':
         logging.info('Received POST request')
 
-        # Check if the checkboxes are selected
-        include_first_pair = 'includeFirstPair' in request.form
-        include_second_pair = 'includeSecondPair' in request.form
-
-        if include_first_pair:
-            location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
-            location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
-
-            location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
-            location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
-
-            if None in location1 or None in location2 or "" in location1_str or "" in location2_str:
-                logging.error("Location 1 or Location 2 were not provided in correct format")
-                return "Location 1 or Location 2 were not provided in correct format"
+        location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
+        location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
+        plot_second_pair = 'plotSecondPair' in request.form
         
-        if include_second_pair:
+        location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
+        location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
+
+        if None in location1 or None in location2 or "" in location1_str or "" in location2_str:
+            logging.error("Location 1 or Location 2 were not provided in correct format")
+            return "Location 1 or Location 2 were not provided in correct format"
+
+        locations = [tuple(location1), tuple(location2)]
+
+        if plot_second_pair:
             location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
             location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
-
+            
             location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
             location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
 
             if None in location3 or None in location4 or "" in location3_str or "" in location4_str:
                 logging.error("Location 3 or Location 4 were not provided in correct format")
                 return "Location 3 or Location 4 were not provided in correct format"
-        
-        locations = []
-        if include_first_pair:
-            locations.extend([tuple(location1), tuple(location2)])
-
-        if include_second_pair:
+            
             locations.extend([tuple(location3), tuple(location4)])
+        else:
+            location3_str = ["", "", ""]
+            location4_str = ["", "", ""]
 
         try:
-            filename_plate_carree = datetime.now().strftime("%Y%m%d_%H%M%S_PlateCarree.png")
-            generate_map(locations, filename_plate_carree, ccrs.PlateCarree())
-            
-            filename_azimuthal_equidistant = datetime.now().strftime("%Y%m%d_%H%M%S_AzimuthalEquidistant.png")
-            generate_map(locations, filename_azimuthal_equidistant, ccrs.AzimuthalEquidistant())
-            
+            time_str = datetime.now().strftime("%Y%m%d%H%M%S")
+            filename_plate_carree = f"map_image_PlateCarree_{time_str}.png"
+            filename_azimuthal_equidistant = f"map_image_AzimuthalEquidistant_{time_str}.png"
+
+            projection = ccrs.PlateCarree()
+            generate_map(projection, locations, filename_plate_carree)
+
+            projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
+            generate_map(projection, locations, filename_azimuthal_equidistant)
+
+            logging.info("Maps generated")
         except Exception as e:
-            logging.error("Error occurred while generating maps")
-            logging.error(traceback.format_exc())
-            return "Error occurred while generating maps"
+            logging.exception("Error during map generation: %s", e)
+            return str(e)
 
     return os.getcwd() + '<br>' + render_template('index.html', 
                                                   filename_plate_carree=filename_plate_carree, 
@@ -91,12 +90,17 @@ def index():
                                                   location2=location2_str,
                                                   location3=location3_str,
                                                   location4=location4_str,
-                                                  includeFirstPair=include_first_pair,
-                                                  includeSecondPair=include_second_pair)
+                                                  plot_second_pair=plot_second_pair)
 
-@app.route('/map/<filename>')
-def serve_map(filename):
-    return send_file(os.path.join(os.getcwd(), filename), mimetype='image/png')
+@app.route('/map1/<filename>', methods=['GET'])
+def serve_map1(filename):
+    image_path = os.path.join('/home/zartyblartfast/', filename)
+    return send_file(image_path, mimetype='image/png')
+
+@app.route('/map2/<filename>', methods=['GET'])
+def serve_map2(filename):
+    image_path = os.path.join('/home/zartyblartfast/', filename)
+    return send_file(image_path, mimetype='image/png')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True) 
