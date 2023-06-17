@@ -51,6 +51,7 @@ def index():
 
         locations = [tuple(location1), tuple(location2)]
 
+        logging.info("plot_second_pair: %s", plot_second_pair)
         if plot_second_pair:
             location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
             location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
