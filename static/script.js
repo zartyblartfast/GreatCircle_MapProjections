@@ -88,11 +88,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
         });
 
-    document.getElementById('locationsForm').addEventListener('submit', function(e) {
-        spinner.style.display = 'inline';
-        // Disable the submit button when the form is submitted
-        submitButton.disabled = true;
-    });
+    // Function to enable or disable the second pair of locations based on the first pair's checkbox
+    function enableSecondPair() {
+        if (pair1Checkbox.checked) {
+            handleVisibility(pair2Checkbox, secondPair);
+        } else {
+            pair2Checkbox.checked = false;
+            handleVisibility(pair2Checkbox, secondPair);
+        }
+    }
+
+    // Add event listener to the first pair's checkbox to handle the visibility of the second pair
+    pair1Checkbox.addEventListener('change', enableSecondPair);
 
     // Enable the submit button when both images have finished loading
     function enableButton() {
