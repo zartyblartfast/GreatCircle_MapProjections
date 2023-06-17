@@ -70,8 +70,13 @@
     </form>
     
     <!-- Add the img tags here -->
-    <img src="{{ url_for('serve_map1', filename=filename_plate_carree) }}" alt="PlateCarree projection" id="mapImage1">
-    <img src="{{ url_for('serve_map2', filename=filename_azimuthal_equidistant) }}" alt="AzimuthalEquidistant projection" id="mapImage2">
+    {% if filename_plate_carree %}
+        <img src="{{ url_for('serve_map1', filename=filename_plate_carree) }}" alt="PlateCarree projection" id="mapImage1">
+    {% endif %}
+    
+    {% if filename_azimuthal_equidistant %}
+        <img src="{{ url_for('serve_map2', filename=filename_azimuthal_equidistant) }}" alt="AzimuthalEquidistant projection" id="mapImage2">
+    {% endif %}
 
     <div id="mapProjection1"></div>
     <div id="mapProjection2"></div>
