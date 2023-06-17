@@ -66,8 +66,8 @@ def index():
 
             locations.extend([tuple(location3), tuple(location4)])
         else:
-            location3_str = ["", "", ""]
-            location4_str = ["", "", ""]
+            location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
+            location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
 
         try:
             time_str = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -85,14 +85,15 @@ def index():
             logging.exception("Error during map generation: %s", e)
             return str(e)
 
-    return render_template('index.html',
-                           filename_plate_carree=filename_plate_carree,
-                           filename_azimuthal_equidistant=filename_azimuthal_equidistant,
-                           location1=location1_str,
-                           location2=location2_str,
-                           location3=location3_str,
-                           location4=location4_str,
-                           plot_second_pair=plot_second_pair)
+        return render_template('index.html',
+           filename_plate_carree=filename_plate_carree,
+           filename_azimuthal_equidistant=filename_azimuthal_equidistant,
+           location1=location1_str,
+           location2=location2_str,
+           location3=location3_str if plot_second_pair else ["", "", ""],
+           location4=location4_str if plot_second_pair else ["", "", ""],
+           plot_second_pair=plot_second_pair)
+
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
