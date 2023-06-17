@@ -33,39 +33,28 @@ def index():
     location3_str = ["", "", ""]
     location4_str = ["", "", ""]
 
-    plot_second_pair = False
-
     if request.method == 'POST':
         logging.info('Received POST request')
 
         location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
         location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
-        plot_second_pair = 'plotSecondPair' in request.form
+        location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
+        location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
         
         location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
         location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
+        location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
+        location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
 
         if None in location1 or None in location2 or "" in location1_str or "" in location2_str:
             logging.error("Location 1 or Location 2 were not provided in correct format")
             return "Location 1 or Location 2 were not provided in correct format"
 
-        locations = [tuple(location1), tuple(location2)]
+        if None in location3 or None in location4 or "" in location3_str or "" in location4_str:
+            logging.error("Location 3 or Location 4 were not provided in correct format")
+            return "Location 3 or Location 4 were not provided in correct format"
 
-        if plot_second_pair:
-            location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
-            location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
-            
-            location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
-            location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
-
-            if None in location3 or None in location4 or "" in location3_str or "" in location4_str:
-                logging.error("Location 3 or Location 4 were not provided in correct format")
-                return "Location 3 or Location 4 were not provided in correct format"
-            
-            locations.extend([tuple(location3), tuple(location4)])
-        else:
-            location3_str = ["", "", ""]
-            location4_str = ["", "", ""]
+        locations = [tuple(location1), tuple(location2), tuple(location3), tuple(location4)]
 
         try:
             time_str = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -89,8 +78,7 @@ def index():
                                                   location1=location1_str,
                                                   location2=location2_str,
                                                   location3=location3_str,
-                                                  location4=location4_str,
-                                                  plot_second_pair=plot_second_pair)
+                                                  location4=location4_str)
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
@@ -103,4 +91,4 @@ def serve_map2(filename):
     return send_file(image_path, mimetype='image/png')
 
 if __name__ == "__main__":
-    app.run(debug=True) 
+    app.run(debug=True)
