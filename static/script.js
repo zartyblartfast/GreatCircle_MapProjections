@@ -2,20 +2,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var spinner = document.getElementById('spinner');
     var secondPair = document.getElementById('secondPair');
     var includeSecondPair = document.getElementById('includeSecondPair');
+    var includeFirstPair = document.getElementById('includeFirstPair');
     var dropdown1 = document.getElementById('dropdown1');
     var dropdown2 = document.getElementById('dropdown2');
 
     spinner.style.display = "none"; // Hide the spinner initially
     includeSecondPair.checked = true; // Check the checkbox initially
+    includeFirstPair.checked = true; // Check the checkbox initially
 
     // Always show the second pair on the initial load
     secondPair.style.display = "";
 
     // Retrieve checkbox state from local storage and update checkbox state
-    var isChecked = localStorage.getItem('includeSecondPair');
-    if (isChecked === 'unchecked') {
+    var isCheckedSecond = localStorage.getItem('includeSecondPair');
+    if (isCheckedSecond === 'unchecked') {
         includeSecondPair.checked = false;
         secondPair.style.display = "none";
+    }
+    
+    var isCheckedFirst = localStorage.getItem('includeFirstPair');
+    if (isCheckedFirst === 'unchecked') {
+        includeFirstPair.checked = false;
     }
 
     // Fetch the locations.json file
@@ -43,11 +50,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 // Update input fields for the first pair
                 document.getElementById('location1Name').value = selectedPair.location1.name;
-                document.getElementById('latitude1').value = selectedPair.location1.latitude;
-                document.getElementById('longitude1').value = selectedPair.location1.longitude;
+                document.getElementById('location1Lat').value = selectedPair.location1.latitude;
+                document.getElementById('location1Lon').value = selectedPair.location1.longitude;
                 document.getElementById('location2Name').value = selectedPair.location2.name;
-                document.getElementById('latitude2').value = selectedPair.location2.latitude;
-                document.getElementById('longitude2').value = selectedPair.location2.longitude;
+                document.getElementById('location2Lat').value = selectedPair.location2.latitude;
+                document.getElementById('location2Lon').value = selectedPair.location2.longitude;
             });
 
             dropdown2.addEventListener('change', function() {
@@ -56,11 +63,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 // Update input fields for the second pair
                 document.getElementById('location3Name').value = selectedPair.location1.name;
-                document.getElementById('latitude3').value = selectedPair.location1.latitude;
-                document.getElementById('longitude3').value = selectedPair.location1.longitude;
+                document.getElementById('location3Lat').value = selectedPair.location1.latitude;
+                document.getElementById('location3Lon').value = selectedPair.location1.longitude;
                 document.getElementById('location4Name').value = selectedPair.location2.name;
-                document.getElementById('latitude4').value = selectedPair.location2.latitude;
-                document.getElementById('longitude4').value = selectedPair.location2.longitude;
+                document.getElementById('location4Lat').value = selectedPair.location2.latitude;
+                document.getElementById('location4Lon').value = selectedPair.location2.longitude;
             });
         });
 
@@ -68,6 +75,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         spinner.style.display = 'inline';
         // Save checkbox state
         localStorage.setItem('includeSecondPair', includeSecondPair.checked ? 'checked' : 'unchecked');
+        localStorage.setItem('includeFirstPair', includeFirstPair.checked ? 'checked' : 'unchecked');
     });
 
     includeSecondPair.addEventListener('change', function() {
@@ -82,6 +90,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
             // Hide second pair and disable all inputs
             secondPair.style.display = "none";
             var inputs = secondPair.querySelectorAll('input');
+            inputs.forEach(function(input) {
+                input.disabled = true;
+            });
+        }
+    });
+
+    includeFirstPair.addEventListener('change', function() {
+        var firstPair = document.getElementById('firstPair');
+        if (this.checked) {
+            // Show first pair and enable all inputs
+            firstPair.style.display = "";
+            var inputs = firstPair.querySelectorAll('input');
+            inputs.forEach(function(input) {
+                input.disabled = false;
+            });
+        } else {
+            // Hide first pair and disable all inputs
+            firstPair.style.display = "none";
+            var inputs = firstPair.querySelectorAll('input');
             inputs.forEach(function(input) {
                 input.disabled = true;
             });
