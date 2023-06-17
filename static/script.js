@@ -12,15 +12,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
     spinner.style.display = "none"; // Hide the spinner initially
 
     // Function to handle form and image visibility
-    function handleVisibility(checkbox, fieldset, image) {
+    function handleVisibility(checkbox, fieldset) {
+        if (!checkbox) {
+            console.log('Checkbox not found');
+            return;
+        }
+        if (!fieldset) {
+            console.log('Fieldset not found');
+            return;
+        }
         if (checkbox.checked) {
-            fieldset.style.display = 'block';
-            image.style.display = 'block';
+            fieldset.style.display = "block";
         } else {
-            fieldset.style.display = 'none';
-            image.style.display = 'none';
+            fieldset.style.display = "none";
         }
     }
+
 
     // Initial visibility setup
     handleVisibility(pair1Checkbox, secondPair, img1);
