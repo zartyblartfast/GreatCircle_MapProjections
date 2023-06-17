@@ -86,13 +86,14 @@ def index():
             return str(e)
 
         return render_template('index.html',
-           filename_plate_carree=filename_plate_carree,
-           filename_azimuthal_equidistant=filename_azimuthal_equidistant,
-           location1=location1_str,
-           location2=location2_str,
-           location3=location3_str if plot_second_pair else ["", "", ""],
-           location4=location4_str if plot_second_pair else ["", "", ""],
-           plot_second_pair=plot_second_pair)
+                       filename_plate_carree=filename_plate_carree,
+                       filename_azimuthal_equidistant=filename_azimuthal_equidistant,
+                       location1=location1_str,
+                       location2=location2_str,
+                       location3=location3_str if plot_second_pair else ["", "", ""],
+                       location4=location4_str if plot_second_pair else ["", "", ""],
+                       plot_second_pair=plot_second_pair)
+
 
 
 @app.route('/map1/<filename>', methods=['GET'])
