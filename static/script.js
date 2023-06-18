@@ -119,8 +119,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     // Add event listeners to the image load events
-    img1.addEventListener('load', enableButton);
-    img2.addEventListener('load', enableButton);
+   if (img1 && img2) {
+     img1.addEventListener('load', enableButton);
+     img2.addEventListener('load', enableButton);
+   }
 
     // Handle the initial visibility of the second pair of locations based on the first pair's checkbox
     enableSecondPair();
