@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Display Great Circles on Two Different Map Projections</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <h1>Display Great Circles on Two Different Map Projections</h1>
     <p>This web page is designed to help people get a better understanding of great circles, which are the shortest paths between two points on the surface of a sphere, and map projections, which are methods for representing the surface of a sphere in two dimensions. We use Planet Earth as our example sphere. Learn more about <a href="https://example.com/great-circles">great circles</a> and <a href="https://example.com/map-projections">map projections</a>.</p>
     
-    <form id="locationsForm" method="POST" action="/">
+    <form id="locationsForm">
         <!-- Fieldset for the first pair of locations -->
-        <fieldset>
+        <fieldset id="firstPair">
             <legend>First Pair of Locations</legend>
             <input type="checkbox" id="pair1Checkbox" checked>
             <label for="pair1Checkbox">Enable/Disable Pair</label>
@@ -74,19 +75,15 @@
         <p><button type="submit">Display Great Circles</button><img src="{{ url_for('static', filename='globe-joypixels.gif') }}" id="spinner" style="display: none"></p>
     </form>
 
+
     <!-- Add the img tags here -->
-    {% if filename_plate_carree %}
-        <img src="{{ url_for('serve_map1', filename=filename_plate_carree) }}" alt="PlateCarree projection" id="mapImage1">
-    {% endif %}
-    
-    {% if filename_azimuthal_equidistant %}
-        <img src="{{ url_for('serve_map2', filename=filename_azimuthal_equidistant) }}" alt="AzimuthalEquidistant projection" id="mapImage2">
-    {% endif %}
+    <img src="{{ url_for('serve_map1', filename=filename_plate_carree) if filename_plate_carree else '' }}" alt="PlateCarree projection" id="mapImage1">
+    <img src="{{ url_for('serve_map2', filename=filename_azimuthal_equidistant) if filename_azimuthal_equidistant else '' }}" alt="AzimuthalEquidistant projection" id="mapImage2">
 
     <div id="mapProjection1"></div>
     <div id="mapProjection2"></div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var img1 = document.getElementById('mapImage1');
@@ -106,6 +103,34 @@
                 img2.addEventListener('load', enableButton);
             }
         });
+
+        $('#locationsForm').on('submit', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "{{ url_for('generate_map_ajax') }}",
+                method: "POST",
+                data: $(this).serialize(),
+                beforeSend: function() {
+                    $("button[type='submit']").prop("disabled", true);
+                    $('#spinner').show();
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        $('#mapImage1').attr('src', "{{ url_for('serve_map1', filename='') }}" + data.filename_plate_carree);
+                        $('#mapImage2').attr('src', "{{ url_for('serve_map2', filename='') }}" + data.filename_azimuthal_equidistant);
+                    }
+                },
+                complete: function() {
+                    $("button[type='submit']").prop("disabled", false);
+                    $('#spinner').hide();
+                }
+            });
+        });
     </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
