@@ -81,10 +81,12 @@ def generate_map_ajax():
 
         projection = ccrs.PlateCarree()
         logging.info("PlateCarree map file path: %s", current_app.root_path)
+        logging.info("PlateCarree image path: %s", os.path.join(current_app.root_path, 'images', filename_plate_carree))
         generate_map(projection, locations, os.path.join(current_app.root_path, 'images', filename_plate_carree))
 
         projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
         logging.info("AzimuthalEquidistant map file path: %s", current_app.root_path)
+        logging.info("AzimuthalEquidistant image path: %s", os.path.join(current_app.root_path, 'images', filename_azimuthal_equidistant))
         generate_map(projection, locations, os.path.join(current_app.root_path, 'images', filename_azimuthal_equidistant))
 
         logging.info("Maps generated")
