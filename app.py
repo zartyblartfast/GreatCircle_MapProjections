@@ -10,8 +10,6 @@ logging.basicConfig(filename='/home/zartyblartfast/GreatCircle_MapProjections/ap
 
 app = Flask(__name__)
 
-logging.info("current_app_root_path: %s", current_app.root_path)
-
 def convert_coord(coord_str):
     try:
         if coord_str[-1].upper() in ('N', 'S', 'E', 'W'):
@@ -102,16 +100,12 @@ def generate_map_ajax():
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
-    logging.info("map1 - current_app.root_path: %s", current_app.root_path)
     image_path = os.path.join(current_app.root_path, 'images', filename)
-    logging.info("map1 - image_path: %s", image_path)
     return send_file(image_path, mimetype='image/png')
 
 @app.route('/map2/<filename>', methods=['GET'])
 def serve_map2(filename):
-    logging.info("map2 - current_app.root_path: %s", current_app.root_path)
     image_path = os.path.join(current_app.root_path, 'images', filename)
-    logging.info("map2 - image_path: %s", image_path)
     return send_file(image_path, mimetype='image/png')
 
 if __name__ == "__main__":
