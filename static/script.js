@@ -22,24 +22,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.log('Fieldset not found');
             return;
         }
+        
         var inputs = fieldset.querySelectorAll('input');
         var selects = fieldset.querySelectorAll('select');
-        if (checkbox.checked) {
-            inputs.forEach(function (input) {
-                input.disabled = false;
+        
+        if (inputs.length > 0) {
+            inputs.forEach(function(input) {
+                input.disabled = !checkbox.checked;
             });
-            selects.forEach(function (select) {
-                select.disabled = false;
-            });
-        } else {
-            inputs.forEach(function (input) {
-                input.disabled = true;
-            });
-            selects.forEach(function (select) {
-                select.disabled = true;
+        }
+        
+        if (selects.length > 0) {
+            selects.forEach(function(select) {
+                select.disabled = !checkbox.checked;
             });
         }
     }
+
 
 
     // Initial visibility setup
