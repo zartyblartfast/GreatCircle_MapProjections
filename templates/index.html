@@ -118,8 +118,8 @@
                     if (data.error) {
                         alert(data.error);
                     } else {
-                        $('#mapImage1').attr('src', "{{ url_for('serve_map1', filename='') }}" + data.filename_plate_carree);
-                        $('#mapImage2').attr('src', "{{ url_for('serve_map2', filename='') }}" + data.filename_azimuthal_equidistant);
+                        $('#mapImage1').attr('src', "{{ url_for('serve_map', filename='') }}" + data.filename_plate_carree);
+                        $('#mapImage2').attr('src', "{{ url_for('serve_map', filename='') }}" + data.filename_azimuthal_equidistant);
                     }
                 },
                 complete: function() {
