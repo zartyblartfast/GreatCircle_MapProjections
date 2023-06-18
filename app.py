@@ -51,9 +51,6 @@ def generate_map_ajax():
 
     plot_second_pair = 'plotSecondPair' in request.form
 
-    location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
-    location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
-
     location1 = location2 = location3 = location4 = None
     
     if not ("" in location1_str):
@@ -81,23 +78,6 @@ def generate_map_ajax():
     if not locations:
         return jsonify({"error": "No locations provided."})
 
-
-    locations = [tuple(location1), tuple(location2)]
-
-    logging.info("plot_second_pair: %s", plot_second_pair)
-    if plot_second_pair:
-        location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
-        location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
-
-        location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
-        location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
-
-        if None in location3 or None in location4 or "" in location3_str or "" in location4_str:
-            logging.error("Location 3 or Location 4 were not provided in the correct format")
-            return jsonify({"error": "Location 3 or Location 4 were not provided in the correct format"})
-
-        locations.extend([tuple(location3), tuple(location4)])
-
     try:
         time_str = datetime.now().strftime("%Y%m%d%H%M%S")
         filename_plate_carree = f"map_image_PlateCarree_{time_str}.png"
@@ -122,7 +102,6 @@ def generate_map_ajax():
         'filename_plate_carree': filename_plate_carree,
         'filename_azimuthal_equidistant': filename_azimuthal_equidistant
     })
-
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
