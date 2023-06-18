@@ -11,6 +11,7 @@
     <p>This web page is designed to help people get a better understanding of great circles, which are the shortest paths between two points on the surface of a sphere, and map projections, which are methods for representing the surface of a sphere in two dimensions. We use Planet Earth as our example sphere. Learn more about <a href="https://example.com/great-circles">great circles</a> and <a href="https://example.com/map-projections">map projections</a>.</p>
     
     <form id="locationsForm" method="POST" action="/">
+        <!-- Fieldset for the first pair of locations -->
         <fieldset>
             <legend>First Pair of Locations</legend>
             <input type="checkbox" id="pair1Checkbox" checked>
@@ -40,6 +41,7 @@
             </table>
         </fieldset>
 
+        <!-- Fieldset for the second pair of locations -->
         <fieldset id="secondPair">
             <legend>Second Pair of Locations</legend>
             <input type="checkbox" id="pair2Checkbox" name="plotSecondPair" checked>
@@ -85,6 +87,25 @@
 
     <div id="mapProjection1"></div>
     <div id="mapProjection2"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var img1 = document.getElementById('mapImage1');
+            var img2 = document.getElementById('mapImage2');
+            var submitButton = document.querySelector('button[type="submit"]');
+            var spinner = document.getElementById('spinner');
+    
+            function enableButton() {
+                if (img1.complete && img2.complete) {
+                    submitButton.disabled = false;
+                    spinner.style.display = 'none';
+                }
+            }
+    
+            img1.addEventListener('load', enableButton);
+            img2.addEventListener('load', enableButton);
+        });
+    </script>
 </body>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
 </html>
