@@ -23,21 +23,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
             return;
         }
         
-        var inputs = fieldset.querySelectorAll('input');
-        var selects = fieldset.querySelectorAll('select');
+        var inputs = fieldset.querySelectorAll('input, select');
         
         if (inputs.length > 0) {
             inputs.forEach(function(input) {
                 input.disabled = !checkbox.checked;
             });
         }
-        
-        if (selects.length > 0) {
-            selects.forEach(function(select) {
-                select.disabled = !checkbox.checked;
-            });
-        }
     }
+
 
 
 
