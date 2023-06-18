@@ -10,6 +10,8 @@ logging.basicConfig(filename='/home/zartyblartfast/GreatCircle_MapProjections/ap
 
 app = Flask(__name__)
 
+logging.info("current_app_root_path: %s", current_app.root_path)
+
 def convert_coord(coord_str):
     try:
         if coord_str[-1].upper() in ('N', 'S', 'E', 'W'):
