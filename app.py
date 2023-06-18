@@ -81,9 +81,14 @@ def generate_map_ajax():
         filename_azimuthal_equidistant = generate_map(locations, ccrs.AzimuthalEquidistant())
         return jsonify({'filename_plate_carree': filename_plate_carree, 'filename_azimuthal_equidistant': filename_azimuthal_equidistant})
 
-@app.route('/images/<filename>')
-def serve_map(filename):
+@app.route('/images1/<filename>')
+def serve_map1(filename):
     return send_file(os.path.join(current_app.root_path, 'images', filename), mimetype='image/png')
+
+@app.route('/images2/<filename>')
+def serve_map2(filename):
+    return send_file(os.path.join(current_app.root_path, 'images', filename), mimetype='image/png')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
