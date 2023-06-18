@@ -85,7 +85,7 @@ def index():
             logging.exception("Error during map generation: %s", e)
             return str(e)
 
-        return render_template('index.html',
+    return render_template('index.html',
                        filename_plate_carree=filename_plate_carree,
                        filename_azimuthal_equidistant=filename_azimuthal_equidistant,
                        location1=location1_str,
