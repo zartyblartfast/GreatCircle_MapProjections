@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, jsonify, current_app
+from flask import Flask, render_template, request, send_file, jsonify, current_app, url_for
 import os
 from map_generator import main as generate_map
 import cartopy.crs as ccrs
@@ -91,10 +91,9 @@ def generate_map_ajax():
         return jsonify({"error": str(e)})
 
     return jsonify({
-        'filename_plate_carree': filename_plate_carree,
-        'filename_azimuthal_equidistant': filename_azimuthal_equidistant
+        'filename_plate_carree': url_for('serve_map1', filename=filename_plate_carree),
+        'filename_azimuthal_equidistant': url_for('serve_map2', filename=filename_azimuthal_equidistant)
     })
-
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
