@@ -63,7 +63,8 @@ def generate_map_ajax():
     logging.info("plot_second_pair: %s", plot_second_pair)
     if plot_second_pair:
         location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
-        location4_str = [request.form.get('location4Name'), request.form.get('location4Lon'), request.form.get('location4Lat')]
+        #location4_str = [request.form.get('location4Name'), request.form.get('location4Lon'), request.form.get('location4Lat')]
+        location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
 
         location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
         location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
