@@ -71,11 +71,9 @@
             </table>
         </fieldset>
 
-
         <p><button type="submit">Display Great Circles</button><img src="{{ url_for('static', filename='globe-joypixels.gif') }}" id="spinner" style="display: none"></p>
-
     </form>
-    
+
     <!-- Add the img tags here -->
     {% if filename_plate_carree %}
         <img src="{{ url_for('serve_map1', filename=filename_plate_carree) }}" alt="PlateCarree projection" id="mapImage1">
@@ -97,14 +95,16 @@
             var spinner = document.getElementById('spinner');
     
             function enableButton() {
-                if (img1.complete && img2.complete) {
+                if (img1 && img2 && img1.complete && img2.complete) {
                     submitButton.disabled = false;
                     spinner.style.display = 'none';
                 }
             }
     
-            img1.addEventListener('load', enableButton);
-            img2.addEventListener('load', enableButton);
+            if (img1 && img2) {
+                img1.addEventListener('load', enableButton);
+                img2.addEventListener('load', enableButton);
+            }
         });
     </script>
 </body>
