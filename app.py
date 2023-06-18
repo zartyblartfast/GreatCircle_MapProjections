@@ -54,9 +54,33 @@ def generate_map_ajax():
     location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
     location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
 
-    if None in location1 or None in location2 or "" in location1_str or "" in location2_str:
-        logging.error("Location 1 or Location 2 were not provided in the correct format")
-        return jsonify({"error": "Location 1 or Location 2 were not provided in the correct format"})
+    location1 = location2 = location3 = location4 = None
+    
+    if not ("" in location1_str):
+        location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
+    if not ("" in location2_str):
+        location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
+    
+    if location1 and location2 and None not in location1 and None not in location2:
+        locations = [tuple(location1), tuple(location2)]
+    else:
+        locations = []
+    
+    if plot_second_pair:
+        location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
+        location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
+        
+        if not ("" in location3_str):
+            location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
+        if not ("" in location4_str):
+            location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
+    
+        if location3 and location4 and None not in location3 and None not in location4:
+            locations.extend([tuple(location3), tuple(location4)])
+    
+    if not locations:
+        return jsonify({"error": "No locations provided."})
+
 
     locations = [tuple(location1), tuple(location2)]
 
