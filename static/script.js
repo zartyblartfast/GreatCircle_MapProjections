@@ -27,13 +27,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         
         if (inputs.length > 0) {
             inputs.forEach(function(input) {
-                input.disabled = !checkbox.checked;
+                if (input !== checkbox) {
+                    input.disabled = !checkbox.checked;
+                }
             });
         }
     }
-
-
-
 
     // Initial visibility setup
     handleVisibility(pair1Checkbox, firstPair);
