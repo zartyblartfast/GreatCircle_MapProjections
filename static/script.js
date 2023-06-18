@@ -22,12 +22,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.log('Fieldset not found');
             return;
         }
+        var inputs = fieldset.querySelectorAll('input');
+        var selects = fieldset.querySelectorAll('select');
         if (checkbox.checked) {
-            fieldset.disabled = false;
+            inputs.forEach(function (input) {
+                input.disabled = false;
+            });
+            selects.forEach(function (select) {
+                select.disabled = false;
+            });
         } else {
-            fieldset.disabled = true;
+            inputs.forEach(function (input) {
+                input.disabled = true;
+            });
+            selects.forEach(function (select) {
+                select.disabled = true;
+            });
         }
     }
+
 
     // Initial visibility setup
     handleVisibility(pair1Checkbox, firstPair);
