@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, send_file, jsonify, current_app
 import os
-from map_generator import main as generate_map
+from map_projector import main as generate_map
 import cartopy.crs as ccrs
 import logging
 from datetime import datetime
+import uuid
 
 logging.basicConfig(filename='/home/zartyblartfast/GreatCircle_MapProjections/app.log', level=logging.DEBUG)
 
@@ -74,21 +75,24 @@ def generate_map_ajax():
             locations.extend([tuple(location3), tuple(location4)])
     
     if not locations:
-        return jsonify({"error": "Invalid locations"}), 400
+        return jsonify({"error": "Please enter valid location data."})
+        
+    filename_prefix = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{str(uuid.uuid4())}"
+    filename_plate_carree = f"{filename_prefix}_plate_carree.png"
+    filename_azimuthal_equidistant = f"{filename_prefix}_azimuthal_equidistant.png"
 
-    else:
-        filename_plate_carree = generate_map(locations, ccrs.PlateCarree())
-        filename_azimuthal_equidistant = generate_map(locations, ccrs.AzimuthalEquidistant())
-        return jsonify({'filename_plate_carree': filename_plate_carree, 'filename_azimuthal_equidistant': filename_azimuthal_equidistant})
+    generate_map(ccrs.PlateCarree(), locations, os.path.join(current_app.root_path, 'static', filename_plate_carree))
+    generate_map(ccrs.AzimuthalEquidistant(), locations, os.path.join(current_app.root_path, 'static', filename_azimuthal_equidistant))
+    
+    return jsonify({
+        "filename_plate_carree": filename_plate_carree,
+        "filename_azimuthal_equidistant": filename_azimuthal_equidistant
+    })
 
-@app.route('/images1/<filename>')
-def serve_map1(filename):
-    return send_file(os.path.join(current_app.root_path, 'images', filename), mimetype='image/png')
-
-@app.route('/images2/<filename>')
-def serve_map2(filename):
-    return send_file(os.path.join(current_app.root_path, 'images', filename), mimetype='image/png')
-
+@app.route('/download_map', methods=['POST'])
+def download_map():
+    filename = request.form.get('filename')
+    return send_file(os.path.join('static', filename), as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
