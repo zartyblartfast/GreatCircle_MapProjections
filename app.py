@@ -100,12 +100,16 @@ def generate_map_ajax():
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
-    image_path = os.path.join(current_app.root_path, 'GreatCircle_MapProjections/images', filename)
+    logging.exception("map1 - current_app.root_path: %s", current_app.root_path)
+    image_path = os.path.join(current_app.root_path, 'images', filename)
+    logging.exception("map1 - image_path: %s", image_path)
     return send_file(image_path, mimetype='image/png')
 
 @app.route('/map2/<filename>', methods=['GET'])
 def serve_map2(filename):
-    image_path = os.path.join(current_app.root_path, 'GreatCircle_MapProjections/images', filename)
+    logging.exception("map2 - current_app.root_path: %s", current_app.root_path)
+    image_path = os.path.join(current_app.root_path, 'images', filename)
+    logging.exception("map2 - image_path: %s", image_path)
     return send_file(image_path, mimetype='image/png')
 
 if __name__ == "__main__":
