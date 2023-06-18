@@ -31,7 +31,7 @@
     <div id="mapProjection1"></div>
     <div id="mapProjection2"></div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var img1 = document.getElementById('mapImage1');
@@ -78,5 +78,6 @@
             });
         });
     </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
