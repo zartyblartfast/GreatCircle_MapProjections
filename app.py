@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, jsonify
+from flask import Flask, render_template, request, send_file, jsonify, current_app
 import os
 from map_generator import main as generate_map
 import cartopy.crs as ccrs
@@ -63,7 +63,6 @@ def generate_map_ajax():
     logging.info("plot_second_pair: %s", plot_second_pair)
     if plot_second_pair:
         location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
-        #location4_str = [request.form.get('location4Name'), request.form.get('location4Lon'), request.form.get('location4Lat')]
         location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
 
         location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
@@ -81,10 +80,10 @@ def generate_map_ajax():
         filename_azimuthal_equidistant = f"map_image_AzimuthalEquidistant_{time_str}.png"
 
         projection = ccrs.PlateCarree()
-        generate_map(projection, locations, filename_plate_carree)
+        generate_map(projection, locations, os.path.join(current_app.root_path, 'images', filename_plate_carree))
 
         projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
-        generate_map(projection, locations, filename_azimuthal_equidistant)
+        generate_map(projection, locations, os.path.join(current_app.root_path, 'images', filename_azimuthal_equidistant))
 
         logging.info("Maps generated")
     except Exception as e:
@@ -99,12 +98,12 @@ def generate_map_ajax():
 
 @app.route('/map1/<filename>', methods=['GET'])
 def serve_map1(filename):
-    image_path = os.path.join('/home/zartyblartfast/', filename)
+    image_path = os.path.join(current_app.root_path, 'images', filename)
     return send_file(image_path, mimetype='image/png')
 
 @app.route('/map2/<filename>', methods=['GET'])
 def serve_map2(filename):
-    image_path = os.path.join('/home/zartyblartfast/', filename)
+    image_path = os.path.join(current_app.root_path, 'images', filename)
     return send_file(image_path, mimetype='image/png')
 
 if __name__ == "__main__":
