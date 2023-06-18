@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //});
     pair1Checkbox.addEventListener('change', function() {
         handleVisibility(pair1Checkbox, firstPair);
-        enableSecondPair();
+        //enableSecondPair();
     });
     pair2Checkbox.addEventListener('change', function() {
         handleVisibility(pair2Checkbox, secondPair);
