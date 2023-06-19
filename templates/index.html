@@ -121,29 +121,6 @@
 
         $('#locationsForm').on('submit', function(e) {
             e.preventDefault();
-
-            $.ajax({
-                url: "{{ url_for('generate_map_ajax') }}",
-                method: "POST",
-                data: $(this).serialize(),
-                beforeSend: function() {
-                    $("button[type='submit']").prop("disabled", true);
-                    $('#spinner').show();
-                },
-                success: function(data) {
-                    console.log(data);
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        $('#mapImage1').attr('src', data.filename_plate_carree);
-                        $('#mapImage2').attr('src', data.filename_azimuthal_equidistant);
-                    }
-                },
-                complete: function() {
-                    $("button[type='submit']").prop("disabled", false);
-                    $('#spinner').hide();
-                }
-            });
         });
     </script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
