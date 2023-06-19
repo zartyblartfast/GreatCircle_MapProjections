@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     var spinner = document.getElementById('spinner');
     var secondPair = document.getElementById('secondPair');
-    var includeSecondPair = document.getElementById('includeSecondPair');
+    var includeSecondPair = document.getElementById('pair2Checkbox');
     var dropdown1 = document.getElementById('dropdown1');
     var dropdown2 = document.getElementById('dropdown2');
 
@@ -29,12 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Create a new option for the dropdown
                 let option1 = document.createElement("option");
                 option1.value = i;  // Store the index as the option's value
-                option1.text = locationPair.location1.name;
+                option1.text = locationPair.name;
 
                 // Create a new option for the second dropdown
                 let option2 = document.createElement("option");
                 option2.value = i;  // Store the index as the option's value
-                option2.text = locationPair.location2.name;
+                option2.text = locationPair.name;
 
                 // Add the options to their respective dropdowns
                 dropdown1.appendChild(option1);
