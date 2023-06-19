@@ -37,7 +37,7 @@ def index():
         plot_second_pair = True
 
         # Fetch location pairs
-        location_pairs_response = get_location_pairs()
+        location_pairs_response = fetch_location_pairs()
         if location_pairs_response.status_code == 200:
             location_pairs = location_pairs_response.json()["location_pairs"]
         else:
