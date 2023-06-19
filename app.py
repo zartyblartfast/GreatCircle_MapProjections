@@ -48,7 +48,7 @@ def index():
                                location_data=location_data)
 
 @app.route('/get_location_pairs', methods=['GET'])
-def get_location_pairs():
+def fetch_location_pairs():
     with open(os.path.join(app.root_path, 'static', 'locations.json'), 'r') as file:
         location_data = json.load(file)
         
