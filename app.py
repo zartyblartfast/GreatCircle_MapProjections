@@ -32,6 +32,11 @@ def index():
         return render_template('index.html',
                                filename_plate_carree=None,
                                filename_azimuthal_equidistant=None,
+                               location1=["", "", ""],
+                               location2=["", "", ""],
+                               location3=["", "", ""],
+                               location4=["", "", ""],
+                               plot_second_pair=False,
                                location_data=location_data)
 
 @app.route('/generate_map', methods=['POST'])
@@ -84,8 +89,8 @@ def generate_map_ajax():
         return jsonify({"error": str(e)})
 
     return jsonify({
-        'filename_plate_carree': url_for('serve_map1', filename=filename_plate_carree),
-        'filename_azimuthal_equidistant': url_for('serve_map2', filename=filename_azimuthal_equidistant)
+        'filename_plate_carree': filename_plate_carree,
+        'filename_azimuthal_equidistant': filename_azimuthal_equidistant
     })
 
 @app.route('/map1/<filename>', methods=['GET'])
