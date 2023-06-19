@@ -39,7 +39,7 @@ def index():
 
         # Fetch location pairs
         #location_pairs_response = requests.get(url_for('fetch_location_pairs'))
-        location_pairs_response = fetch_location_pairs()
+        location_pairs_response = fetch_location_pairs
 
         if location_pairs_response.status_code == 200:
             location_pairs = location_pairs_response.json()["location_pairs"]
