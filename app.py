@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, send_file, jsonify, current_app
+#from flask import Flask, render_template, request, send_file, jsonify, current_app
+from flask import Flask, render_template, request, send_file, jsonify
 import os
 import json
 from map_generator import main as generate_map
