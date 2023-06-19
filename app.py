@@ -28,7 +28,6 @@ def index():
     if request.method == 'POST':
         # Your existing POST handling code here
         pass
-
     else:
         location1_str = [location_data[0]['location1']['name'], location_data[0]['location1']['latitude'], location_data[0]['location1']['longitude']]
         location2_str = [location_data[0]['location2']['name'], location_data[0]['location2']['latitude'], location_data[0]['location2']['longitude']]
@@ -36,6 +35,13 @@ def index():
         location4_str = [location_data[1]['location2']['name'], location_data[1]['location2']['latitude'], location_data[1]['location2']['longitude']]
 
         plot_second_pair = True
+
+        # Fetch location pairs
+        location_pairs_response = get_location_pairs()
+        if location_pairs_response.status_code == 200:
+            location_pairs = location_pairs_response.json()["location_pairs"]
+        else:
+            location_pairs = []
 
         return render_template('index.html',
                                filename_plate_carree=None,
@@ -45,8 +51,8 @@ def index():
                                location3=location3_str if plot_second_pair else ["", "", ""],
                                location4=location4_str if plot_second_pair else ["", "", ""],
                                plot_second_pair=plot_second_pair,
-                               location_data=location_data)
-
+                               location_data=location_data,
+                               location_pairs=location_pairs)
 @app.route('/get_location_pairs', methods=['GET'])
 def fetch_location_pairs():
     with open(os.path.join(app.root_path, 'static', 'locations.json'), 'r') as file:
