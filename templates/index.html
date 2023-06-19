@@ -8,8 +8,82 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <!-- ... (rest of your HTML file remains unchanged) ... -->
+    <h1>Display Great Circles on Two Different Map Projections</h1>
+    <p>This web page is designed to help people get a better understanding of great circles, which are the shortest paths between two points on the surface of a sphere, and map projections, which are methods for representing the surface of a sphere in two dimensions. We use Planet Earth as our example sphere. Learn more about <a href="https://example.com/great-circles">great circles</a> and <a href="https://example.com/map-projections">map projections</a>.</p>
+    
+    <form id="locationsForm">
+        <!-- Fieldset for the first pair of locations -->
+        <fieldset id="firstPair">
+            <legend>First Pair of Locations</legend>
+            <input type="checkbox" id="pair1Checkbox" checked>
+            <label for="pair1Checkbox">Enable/Disable Pair</label>
+            <div>
+                <label for="dropdown1">Select Example Location Pair 1:</label>
+                <select id="dropdown1" name="dropdown1">
+                    <option value="" selected="selected">Choose a pair</option>
+                </select>
+            </div>
+            <table>
+                <tr>
+                    <th>Location Name</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+                <tr>
+                    <td><input type="text" id="location1Name" name="location1Name" value="{{location1[0]}}"></td>
+                    <td><input type="text" id="latitude1" name="location1Lat" value="{{location1[1]}}"></td>
+                    <td><input type="text" id="longitude1" name="location1Lon" value="{{location1[2]}}"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="location2Name" name="location2Name" value="{{location2[0]}}"></td>
+                    <td><input type="text" id="latitude2" name="location2Lat" value="{{location2[1]}}"></td>
+                    <td><input type="text" id="longitude2" name="location2Lon" value="{{location2[2]}}"></td>
+                </tr>
+            </table>
+        </fieldset>
 
+        <!-- Fieldset for the second pair of locations -->
+        <fieldset id="secondPair">
+            <legend>Second Pair of Locations</legend>
+            <input type="checkbox" id="pair2Checkbox" name="plotSecondPair" checked>
+            <label for="pair2Checkbox">Enable/Disable Pair</label>
+            <div>
+                <label for="dropdown2">Select Example Location Pair 2:</label>
+                <select id="dropdown2" name="dropdown2">
+                    <option value="" selected="selected">Choose a pair</option>
+                </select>
+            </div>
+            <table>
+                <tr>
+                    <th>Location Name</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+                <tr>
+                    <td><input type="text" id="location3Name" name="location3Name" value="{{location3[0]}}"></td>
+                    <td><input type="text" id="latitude3" name="location3Lat" value="{{location3[1]}}"></td>
+                    <td><input type="text" id="longitude3" name="location3Lon" value="{{location3[2]}}"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="location4Name" name="location4Name" value="{{location4[0]}}"></td>
+                    <td><input type="text" id="latitude4" name="location4Lat" value="{{location4[1]}}"></td>
+                    <td><input type="text" id="longitude4" name="location4Lon" value="{{location4[2]}}"></td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <p><button type="submit">Display Great Circles</button><img src="{{ url_for('static', filename='globe-joypixels.gif') }}" id="spinner" style="display: none"></p>
+    </form>
+
+
+    <!-- Add the img tags here -->
+    <img src="{{ url_for('serve_map1', filename=filename_plate_carree) if filename_plate_carree else '' }}" alt="PlateCarree projection" id="mapImage1">
+    <img src="{{ url_for('serve_map2', filename=filename_azimuthal_equidistant) if filename_azimuthal_equidistant else '' }}" alt="AzimuthalEquidistant projection" id="mapImage2">
+
+    <div id="mapProjection1"></div>
+    <div id="mapProjection2"></div>
+
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var img1 = document.getElementById('mapImage1');
@@ -28,30 +102,6 @@
                 img1.addEventListener('load', enableButton);
                 img2.addEventListener('load', enableButton);
             }
-
-            // New code to populate the dropdown menus
-            $.ajax({
-                url: "{{ url_for('get_location_pairs') }}",
-                method: "GET",
-                success: function(data) {
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        var dropdown1 = document.getElementById('dropdown1');
-                        var dropdown2 = document.getElementById('dropdown2');
-
-                        for (var i = 0; i < data.location_pairs.length; i++) {
-                            var pair = data.location_pairs[i];
-                            var option1 = document.createElement('option');
-                            var option2 = document.createElement('option');
-                            option1.value = option2.value = pair.id;
-                            option1.textContent = option2.textContent = pair.name;
-                            dropdown1.appendChild(option1);
-                            dropdown2.appendChild(option2);
-                        }
-                    }
-                }
-            });
         });
 
         $('#locationsForm').on('submit', function(e) {
