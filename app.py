@@ -49,6 +49,17 @@ def index():
 
 @app.route('/get_location_pairs', methods=['GET'])
 def get_location_pairs():
+    pairs = []
+    for i, pair in enumerate(location_data):
+        pairs.append({
+            "id": i,
+            "name": f"{pair['location1']['name']} - {pair['location2']['name']}"
+        })
+    
+    return jsonify({"location_pairs": pairs})
+
+@app.route('/get_location_pairs', methods=['GET'])
+def get_location_pairs():
     with open(os.path.join(app.root_path, 'static', 'locations.json'), 'r') as file:
         location_data = json.load(file)
         
