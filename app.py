@@ -78,10 +78,10 @@ def generate_map_ajax():
         filename_azimuthal_equidistant = f"map_image_AzimuthalEquidistant_{time_str}.png"
 
         projection = ccrs.PlateCarree()
-        generate_map(projection, locations, os.path.join(app.root_path, 'images', filename_plate_carree))
+        generate_map(projection, locations, os.path.join(app.root_path, 'images', filename_plate_carree), app)
 
         projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
-        generate_map(projection, locations, os.path.join(app.root_path, 'images', filename_azimuthal_equidistant))
+        generate_map(projection, locations, os.path.join(app.root_path, 'images', filename_azimuthal_equidistant), app)
 
         logging.info("Maps generated")
     except Exception as e:
