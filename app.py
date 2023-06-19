@@ -22,7 +22,7 @@ def convert_coord(coord_str):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    with open('locations.json', 'r') as file:
+    with open(os.path.join(app.root_path, 'static', 'locations.json'), 'r') as file:
         location_data = json.load(file)
 
     if request.method == 'POST':
