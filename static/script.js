@@ -30,6 +30,18 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdown1.innerHTML = "";
             dropdown2.innerHTML = "";
 
+            // Create a default placeholder option for dropdown1
+            let placeholderOption1 = document.createElement("option");
+            placeholderOption1.value = ""; // Empty value for placeholder
+            placeholderOption1.text = "Select a pair";
+            dropdown1.appendChild(placeholderOption1);
+
+            // Create a default placeholder option for dropdown2
+            let placeholderOption2 = document.createElement("option");
+            placeholderOption2.value = ""; // Empty value for placeholder
+            placeholderOption2.text = "Select a pair";
+            dropdown2.appendChild(placeholderOption2);
+
             // Loop through each item in the data
             for (let i = 0; i < data.length; i++) {
                 let locationPair = data[i];
