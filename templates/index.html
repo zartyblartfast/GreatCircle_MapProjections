@@ -41,7 +41,7 @@
                 </tr>
             </table>
         </fieldset>
-
+    
         <!-- Fieldset for the second pair of locations -->
         <fieldset id="secondPair">
             <legend>Second Pair of Locations</legend>
@@ -71,9 +71,13 @@
                 </tr>
             </table>
         </fieldset>
-
-        <p><button type="submit">Display Great Circles</button><img src="{{ url_for('static', filename='globe-joypixels.gif') }}" id="spinner" style="display: none"></p>
+    
+        <p>
+            <button type="submit">Display Great Circles</button>
+            <img src="{{ url_for('static', filename='globe-joypixels.gif') }}" id="spinner" style="display: none">
+        </p>
     </form>
+
 
 
     <!-- Add the img tags here -->
