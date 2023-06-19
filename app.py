@@ -1,12 +1,11 @@
 from flask import Flask, render_template, request, send_file, jsonify, current_app, url_for
 import os
+import json
 from map_generator import main as generate_map
 import cartopy.crs as ccrs
-import traceback
 import logging
 from datetime import datetime
 
-#logging.basicConfig(filename='/home/zartyblartfast/GreatCircle_MapProjections/app.log', level=logging.DEBUG)
 logging.basicConfig(filename='app.log', level=logging.DEBUG)
 
 app = Flask(__name__)
@@ -26,6 +25,10 @@ def convert_coord(coord_str):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # Load location data from JSON file
+    with open('locations.json', 'r') as file:
+        location_data = json.load(file)
+
     location1_str = ["", "", ""]
     location2_str = ["", "", ""]
     location3_str = ["", "", ""]
@@ -34,13 +37,14 @@ def index():
     plot_second_pair = False
 
     return render_template('index.html',
-                       filename_plate_carree=None,
-                       filename_azimuthal_equidistant=None,
-                       location1=location1_str,
-                       location2=location2_str,
-                       location3=location3_str if plot_second_pair else ["", "", ""],
-                       location4=location4_str if plot_second_pair else ["", "", ""],
-                       plot_second_pair=plot_second_pair)
+                           filename_plate_carree=None,
+                           filename_azimuthal_equidistant=None,
+                           location1=location1_str,
+                           location2=location2_str,
+                           location3=location3_str if plot_second_pair else ["", "", ""],
+                           location4=location4_str if plot_second_pair else ["", "", ""],
+                           plot_second_pair=plot_second_pair,
+                           location_data=location_data)
 
 @app.route('/generate_map', methods=['POST'])
 def generate_map_ajax():
