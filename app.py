@@ -53,18 +53,19 @@ def index():
                                plot_second_pair=plot_second_pair,
                                location_data=location_data,
                                location_pairs=location_pairs)
+        
 @app.route('/get_location_pairs', methods=['GET'])
 def fetch_location_pairs():
     with open(os.path.join(app.root_path, 'static', 'locations.json'), 'r') as file:
         location_data = json.load(file)
-        
+
     pairs = []
     for i, pair in enumerate(location_data):
         pairs.append({
-            "id": i,
-            "name": f"{pair['location1']['name']} - {pair['location2']['name']}"
+            "pairID": i,
+            "pairName": f"{pair['location1']['name']} - {pair['location2']['name']}"
         })
-    
+
     return jsonify({"location_pairs": pairs})
 
 @app.route('/generate_map', methods=['POST'])
