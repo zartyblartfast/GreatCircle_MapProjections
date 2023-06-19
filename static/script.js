@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', function() {
     var spinner = document.getElementById('spinner');
     var secondPair = document.getElementById('secondPair');
     var includeSecondPair = document.getElementById('includeSecondPair');
