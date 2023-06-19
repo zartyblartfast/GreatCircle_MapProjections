@@ -102,6 +102,20 @@
                 img1.addEventListener('load', enableButton);
                 img2.addEventListener('load', enableButton);
             }
+
+            $.ajax({
+                url: "{{ url_for('fetch_location_pairs') }}",
+                method: "GET",
+                success: function(data) {
+                    var dropdown1 = $("#dropdown1");
+                    var dropdown2 = $("#dropdown2");
+
+                    for(var i = 0; i < data.length; i++) {
+                        dropdown1.append($("<option />").val(data[i].pairID).text(data[i].pairName));
+                        dropdown2.append($("<option />").val(data[i].pairID).text(data[i].pairName));
+                    }
+                },
+            });
         });
 
         $('#locationsForm').on('submit', function(e) {
