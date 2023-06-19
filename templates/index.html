@@ -104,7 +104,7 @@
             }
 
             $.ajax({
-                url: "{{ url_for('fetch_location_pairs') }}",
+                url: "{{ url_for('static', filename='locations.json') }}",
                 method: "GET",
                 success: function(data) {
                     var dropdown1 = $("#dropdown1");
