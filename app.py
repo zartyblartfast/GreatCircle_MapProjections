@@ -5,6 +5,7 @@ from map_generator import main as generate_map
 import cartopy.crs as ccrs
 import logging
 from datetime import datetime
+import requests
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG)
 
