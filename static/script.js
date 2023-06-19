@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('/static/locations.json')
         .then(response => response.json())
         .then(data => {
+            // Clear existing dropdown options
+            dropdown1.innerHTML = "";
+            dropdown2.innerHTML = "";
+
             // Loop through each item in the data
             for (let i = 0; i < data.length; i++) {
                 let locationPair = data[i];
