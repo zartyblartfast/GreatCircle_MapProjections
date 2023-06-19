@@ -1,20 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
     var spinner = document.getElementById('spinner');
+    var firstPair = document.getElementById('firstPair');
     var secondPair = document.getElementById('secondPair');
-    var includeSecondPair = document.getElementById('pair2Checkbox');
+    var pair1Checkbox = document.getElementById('pair1Checkbox');
+    var pair2Checkbox = document.getElementById('pair2Checkbox');
     var dropdown1 = document.getElementById('dropdown1');
     var dropdown2 = document.getElementById('dropdown2');
 
     spinner.style.display = "none"; // Hide the spinner initially
-    includeSecondPair.checked = true; // Check the checkbox initially
 
-    // Always show the second pair on the initial load
-    secondPair.style.display = "";
+    // Retrieve checkbox states from local storage and update checkbox states
+    var isChecked1 = localStorage.getItem('includeFirstPair');
+    if (isChecked1 === 'unchecked') {
+        pair1Checkbox.checked = false;
+        firstPair.style.display = "none";
+    }
 
-    // Retrieve checkbox state from local storage and update checkbox state
-    var isChecked = localStorage.getItem('includeSecondPair');
-    if (isChecked === 'unchecked') {
-        includeSecondPair.checked = false;
+    var isChecked2 = localStorage.getItem('includeSecondPair');
+    if (isChecked2 === 'unchecked') {
+        pair2Checkbox.checked = false;
         secondPair.style.display = "none";
     }
 
@@ -71,11 +75,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('locationsForm').addEventListener('submit', function(e) {
         spinner.style.display = 'inline';
-        // Save checkbox state
-        localStorage.setItem('includeSecondPair', includeSecondPair.checked ? 'checked' : 'unchecked');
+        // Save checkbox states
+        localStorage.setItem('includeFirstPair', pair1Checkbox.checked ? 'checked' : 'unchecked');
+        localStorage.setItem('includeSecondPair', pair2Checkbox.checked ? 'checked' : 'unchecked');
     });
 
-    includeSecondPair.addEventListener('change', function() {
+    pair1Checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            // Show first pair and enable all inputs
+            firstPair.style.display = "";
+            var inputs = firstPair.querySelectorAll('input');
+            inputs.forEach(function(input) {
+                input.disabled = false;
+            });
+        } else {
+            // Hide first pair and disable all inputs
+            firstPair.style.display = "none";
+            var inputs = firstPair.querySelectorAll('input');
+            inputs.forEach(function(input) {
+                input.disabled = true;
+            });
+        }
+    });
+
+    pair2Checkbox.addEventListener('change', function() {
         if (this.checked) {
             // Show second pair and enable all inputs
             secondPair.style.display = "";
