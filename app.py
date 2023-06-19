@@ -11,40 +11,41 @@ logging.basicConfig(filename='app.log', level=logging.DEBUG)
 app = Flask(__name__)
 
 def convert_coord(coord_str):
-    try:
-        if coord_str[-1].upper() in ('N', 'S', 'E', 'W'):
-            direction = coord_str[-1].upper()
-            coord = float(coord_str[:-1])
-            if direction in ('S', 'W'):
-                coord *= -1  # Switch to negative for S and W
-        else:
-            coord = float(coord_str)
-    except ValueError:
-        return None
+    if coord_str[-1].upper() in ('N', 'S', 'E', 'W'):
+        direction = coord_str[-1].upper()
+        coord = float(coord_str[:-1])
+        if direction in ('S', 'W'):
+            coord *= -1
+    else:
+        coord = float(coord_str)
     return coord
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # Load location data from JSON file
     with open('locations.json', 'r') as file:
         location_data = json.load(file)
 
-    location1_str = ["", "", ""]
-    location2_str = ["", "", ""]
-    location3_str = ["", "", ""]
-    location4_str = ["", "", ""]
+    if request.method == 'POST':
+        # Your existing POST handling code here
+        pass
 
-    plot_second_pair = False
+    else:
+        location1_str = [location_data[0]['location1']['name'], location_data[0]['location1']['latitude'], location_data[0]['location1']['longitude']]
+        location2_str = [location_data[0]['location2']['name'], location_data[0]['location2']['latitude'], location_data[0]['location2']['longitude']]
+        location3_str = [location_data[1]['location1']['name'], location_data[1]['location1']['latitude'], location_data[1]['location1']['longitude']]
+        location4_str = [location_data[1]['location2']['name'], location_data[1]['location2']['latitude'], location_data[1]['location2']['longitude']]
 
-    return render_template('index.html',
-                           filename_plate_carree=None,
-                           filename_azimuthal_equidistant=None,
-                           location1=location1_str,
-                           location2=location2_str,
-                           location3=location3_str if plot_second_pair else ["", "", ""],
-                           location4=location4_str if plot_second_pair else ["", "", ""],
-                           plot_second_pair=plot_second_pair,
-                           location_data=location_data)
+        plot_second_pair = True
+
+        return render_template('index.html',
+                               filename_plate_carree=None,
+                               filename_azimuthal_equidistant=None,
+                               location1=location1_str,
+                               location2=location2_str,
+                               location3=location3_str if plot_second_pair else ["", "", ""],
+                               location4=location4_str if plot_second_pair else ["", "", ""],
+                               plot_second_pair=plot_second_pair,
+                               location_data=location_data)
 
 @app.route('/generate_map', methods=['POST'])
 def generate_map_ajax():
