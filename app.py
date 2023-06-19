@@ -38,9 +38,10 @@ def index():
         plot_second_pair = True
 
         # Fetch location pairs
-        #location_pairs_response = requests.get(url_for('fetch_location_pairs'))
+        location_pairs_response = requests.get(url_for('fetch_location_pairs'))
         #location_pairs_response = requests.get(flask.url_for('fetch_location_pairs'))
-        location_pairs_response = requests.get(url_for('fetch_location_pairs', _external=True))
+        #location_pairs_response = requests.get(url_for('fetch_location_pairs', _external=True))
+
 
         if location_pairs_response.status_code == 200:
             location_pairs = location_pairs_response.json()["location_pairs"]
