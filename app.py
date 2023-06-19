@@ -1,11 +1,10 @@
-from flask import Flask, render_template, request, send_file, jsonify, current_app, url_for
+from flask import Flask, render_template, request, send_file, jsonify, current_app
 import os
 import json
 from map_generator import main as generate_map
 import cartopy.crs as ccrs
 import logging
 from datetime import datetime
-import requests
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG)
 
@@ -30,56 +29,18 @@ def index():
         # Your existing POST handling code here
         pass
     else:
-        location1_str = [location_data[0]['location1']['name'], location_data[0]['location1']['latitude'], location_data[0]['location1']['longitude']]
-        location2_str = [location_data[0]['location2']['name'], location_data[0]['location2']['latitude'], location_data[0]['location2']['longitude']]
-        location3_str = [location_data[1]['location1']['name'], location_data[1]['location1']['latitude'], location_data[1]['location1']['longitude']]
-        location4_str = [location_data[1]['location2']['name'], location_data[1]['location2']['latitude'], location_data[1]['location2']['longitude']]
-
-        plot_second_pair = True
-
-        # Fetch location pairs
-        location_pairs_response = requests.get(url_for('fetch_location_pairs'))
-        #location_pairs_response = requests.get(flask.url_for('fetch_location_pairs'))
-        #location_pairs_response = requests.get(url_for('fetch_location_pairs', _external=True))
-
-
-        if location_pairs_response.status_code == 200:
-            location_pairs = location_pairs_response.json()["location_pairs"]
-        else:
-            location_pairs = []
-
         return render_template('index.html',
                                filename_plate_carree=None,
                                filename_azimuthal_equidistant=None,
-                               location1=location1_str,
-                               location2=location2_str,
-                               location3=location3_str if plot_second_pair else ["", "", ""],
-                               location4=location4_str if plot_second_pair else ["", "", ""],
-                               plot_second_pair=plot_second_pair,
-                               location_data=location_data,
-                               location_pairs=location_pairs)
-        
-@app.route('/get_location_pairs', methods=['GET'])
-def fetch_location_pairs():
-    with open(os.path.join(app.root_path, 'static', 'locations.json'), 'r') as file:
-        location_data = json.load(file)
-
-    pairs = []
-    for i, pair in enumerate(location_data):
-        pairs.append({
-            "pairID": i,
-            "pairName": f"{pair['location1']['name']} - {pair['location2']['name']}"
-        })
-
-    return jsonify({"location_pairs": pairs})
+                               location_data=location_data)
 
 @app.route('/generate_map', methods=['POST'])
 def generate_map_ajax():
     filename_plate_carree = None
     filename_azimuthal_equidistant = None
 
-    location1_str = [request.form.get('location1Name'), request.form.get('location1Lat'), request.form.get('location1Lon')]
-    location2_str = [request.form.get('location2Name'), request.form.get('location2Lat'), request.form.get('location2Lon')]
+    location1_str = [request.form.get('location1Name'), request.form.get('latitude1'), request.form.get('longitude1')]
+    location2_str = [request.form.get('location2Name'), request.form.get('latitude2'), request.form.get('longitude2')]
 
     plot_second_pair = 'plotSecondPair' in request.form
 
@@ -94,8 +55,8 @@ def generate_map_ajax():
 
     logging.info("plot_second_pair: %s", plot_second_pair)
     if plot_second_pair:
-        location3_str = [request.form.get('location3Name'), request.form.get('location3Lat'), request.form.get('location3Lon')]
-        location4_str = [request.form.get('location4Name'), request.form.get('location4Lat'), request.form.get('location4Lon')]
+        location3_str = [request.form.get('location3Name'), request.form.get('latitude3'), request.form.get('longitude3')]
+        location4_str = [request.form.get('location4Name'), request.form.get('latitude4'), request.form.get('longitude4')]
 
         location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
         location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
