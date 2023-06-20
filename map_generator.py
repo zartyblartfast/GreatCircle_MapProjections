@@ -1,3 +1,7 @@
+import logging_config
+
+logging_config.setup_logger()
+
 import os
 import numpy as np
 import matplotlib.pyplot as plt
