@@ -6,6 +6,10 @@ import cartopy.crs as ccrs
 import cartopy.mpl.gridliner as cgridliner
 import matplotlib.ticker as mticker
 from matplotlib import transforms as mtransforms
+import logging
+
+# Get a logger instance
+logger = logging.getLogger(__name__)
 
 def calculate_great_circle_points(lon1, lat1, lon2, lat2, num_points):
     g = pyproj.Geod(ellps='WGS84')
