@@ -105,13 +105,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.disabled = false;
             });
         } else {
-            // Disable all inputs
+            // Disable all inputs except the checkbox itself
             inputs.forEach(function(input) {
-                input.disabled = true;
+                if (input.id !== 'pair1Checkbox') {
+                    input.disabled = true;
+                    input.value = '';
+                }
             });
         }
     });
-
+    
     pair2Checkbox.addEventListener('change', function() {
         var inputs = secondPair.querySelectorAll('input');
         if (this.checked) {
@@ -120,10 +123,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.disabled = false;
             });
         } else {
-            // Disable all inputs
+            // Disable all inputs except the checkbox itself
             inputs.forEach(function(input) {
-                input.disabled = true;
+                if (input.id !== 'pair2Checkbox') {
+                    input.disabled = true;
+                    input.value = '';
+                }
             });
         }
     });
+
 });
