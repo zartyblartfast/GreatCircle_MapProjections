@@ -1,3 +1,7 @@
+import logging_config
+
+logging_config.setup_logger()
+
 from flask import Flask, render_template, request, send_file, jsonify
 import os
 import json
