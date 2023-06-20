@@ -4,6 +4,7 @@ import json
 from map_generator import main as generate_map
 import cartopy.crs as ccrs
 import logging
+from logging.handlers import RotatingFileHandler
 from datetime import datetime
 
 app = Flask(__name__)
