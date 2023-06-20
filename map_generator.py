@@ -92,8 +92,8 @@ def main(projection, locations, output_file):
         gl.xlocator = mticker.FixedLocator(np.arange(-180, 180, 30))
         gl.ylocator = mticker.FixedLocator(np.arange(-90, 90, 30))
 
-    #plt.savefig(output_file)
-    plt.savefig(os.path.join(app.root_path, 'images', filename))
+    plt.savefig(output_file)
+    #plt.savefig(os.path.join(app.root_path, 'images', filename))
 
     # Close the figure to free up memory
     plt.close(fig)
