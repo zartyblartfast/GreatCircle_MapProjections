@@ -84,15 +84,18 @@ def generate_map_ajax():
         filename_plate_carree = f"map_image_PlateCarree_{time_str}.png"
         filename_azimuthal_equidistant = f"map_image_AzimuthalEquidistant_{time_str}.png"
 
+        folderPath_plate_carree = os.path.join(app.root_path, 'static', 'images', filename_plate_carree)
+        folderPath__azimuthal_equidistant = os.path.join(app.root_path, 'static', 'images', filename_azimuthal_equidistant)
+
         projection = ccrs.PlateCarree()
-        app.logger.info("os.path.join(app.root_path, 'images', filename_plate_carree): %s", os.path.join(app.root_path, 'images', filename_plate_carree))
+        app.logger.info("folderPath_plate_carree: %s", folderPath_plate_carree)
         app.logger.info("filename_plate_carree: %s", filename_plate_carree)
-        generate_map(projection, locations, os.path.join(app.root_path, 'images', filename_plate_carree))
+        generate_map(projection, locations,folderPath_plate_carree)
 
         projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
-        app.logger.info("os.path.join(app.root_path, 'images', filename_plate_carree): %s", os.path.join(app.root_path, 'images', filename_azimuthal_equidistant))
+        app.logger.info("folderPath__azimuthal_equidistant: %s", folderPath__azimuthal_equidistant)
         app.logger.info("filename_azimuthal_equidistant: %s", filename_azimuthal_equidistant)
-        generate_map(projection, locations, os.path.join(app.root_path, 'images', filename_azimuthal_equidistant))
+        generate_map(projection, locations,folderPath__azimuthal_equidistant)
 
         app.logger.info("Maps generated")
     except Exception as e:
