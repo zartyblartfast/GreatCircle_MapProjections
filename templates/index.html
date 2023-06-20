@@ -137,8 +137,8 @@
                     if (data.error) {
                         alert(data.error);
                     } else {
-                        $('#mapImage1').attr('src', data.filename_plate_carree);
-                        $('#mapImage2').attr('src', data.filename_azimuthal_equidistant);
+                        $('#mapImage1').attr('src', '/static/images/' + data.filename_plate_carree);
+                        $('#mapImage2').attr('src', '/static/images/' + data.filename_azimuthal_equidistant);
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
