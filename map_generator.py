@@ -66,8 +66,6 @@ def main(projection, locations, output_file):
     elif len(locations) == 4:
         location1, location2, location3, location4 = locations
     else:
-        #logger.error("locations must have length 2 or 4")
-        #raise ValueError("locations must have length 2 or 4")
         No_Locations = True
 
     if No_Locations == False:
