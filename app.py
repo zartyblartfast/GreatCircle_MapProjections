@@ -59,7 +59,8 @@ def generate_map_ajax():
     app.logger.info(f"Received location1 data: {location1_str}")
     location2_str = [request.form.get('location2Name'), request.form.get('latitude2'), request.form.get('longitude2')]
     app.logger.info(f"Received location2 data: {location2_str}")
-    
+
+    app.logger.info(f"Form data: {request.form}")
     plot_second_pair = 'plotSecondPair' in request.form
 
     location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
