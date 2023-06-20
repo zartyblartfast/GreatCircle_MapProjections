@@ -9,9 +9,12 @@ from datetime import datetime
 app = Flask(__name__)
 
 if not app.debug:
-    file_handler = logging.FileHandler('app.log')
+    file_handler = RotatingFileHandler(filename=os.path.join('/home/zartyblartfast/GreatCircle_MapProjections', 'app.log'), maxBytes=1024*1024*10, backupCount=0)
     file_handler.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
     app.logger.addHandler(file_handler)
+    app.logger.setLevel(logging.INFO)
     
 def convert_coord(coord_str):
     if coord_str[-1].upper() in ('N', 'S', 'E', 'W'):
