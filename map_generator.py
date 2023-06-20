@@ -83,10 +83,10 @@ def main(projection, locations, output_file):
 
     ax.stock_img()
 
-    # Plot the great circles and get their colors
-    color1 = plot_great_circle(lonlats1, ax, color='b', linewidth=2, zorder=3)
-
     if No_Locations == False:
+        # Plot the great circles and get their colors
+        color1 = plot_great_circle(lonlats1, ax, color='b', linewidth=2, zorder=3)
+
         if location3 and location4:
             color2 = plot_great_circle(lonlats2, ax, color='r', linewidth=2, zorder=3)
     
