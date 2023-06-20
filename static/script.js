@@ -9,17 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     spinner.style.display = "none"; // Hide the spinner initially
 
-    // Retrieve checkbox states from local storage and update checkbox states
-    var isChecked1 = localStorage.getItem('includeFirstPair');
-    if (isChecked1 === 'unchecked') {
-        pair1Checkbox.checked = false;
-    }
-
-    var isChecked2 = localStorage.getItem('includeSecondPair');
-    if (isChecked2 === 'unchecked') {
-        pair2Checkbox.checked = false;
-    }
-
     // Fetch the locations.json file
     fetch('/static/locations.json')
         .then(response => response.json())
@@ -59,78 +48,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown2.appendChild(option2);
             }
 
-            // Update input fields when a dropdown value is selected
-            dropdown1.addEventListener('change', function() {
-                let selectedPairIndex = this.value;
-                let selectedPair = data[selectedPairIndex];
+            // Set the first item of each dropdown as the selected item and populate the fields accordingly
+            dropdown1.selectedIndex = 1;
+            let selectedPair1 = data[0];
+            document.getElementById('location1Name').value = selectedPair1.location1.name;
+            document.getElementById('latitude1').value = selectedPair1.location1.latitude;
+            document.getElementById('longitude1').value = selectedPair1.location1.longitude;
+            document.getElementById('location2Name').value = selectedPair1.location2.name;
+            document.getElementById('latitude2').value = selectedPair1.location2.latitude;
+            document.getElementById('longitude2').value = selectedPair1.location2.longitude;
 
-                // Update input fields for the first pair
-                document.getElementById('location1Name').value = selectedPair.location1.name;
-                document.getElementById('latitude1').value = selectedPair.location1.latitude;
-                document.getElementById('longitude1').value = selectedPair.location1.longitude;
-                document.getElementById('location2Name').value = selectedPair.location2.name;
-                document.getElementById('latitude2').value = selectedPair.location2.latitude;
-                document.getElementById('longitude2').value = selectedPair.location2.longitude;
-            });
+            dropdown2.selectedIndex = 2;
+            let selectedPair2 = data[1];
+            document.getElementById('location3Name').value = selectedPair2.location1.name;
+            document.getElementById('latitude3').value = selectedPair2.location1.latitude;
+            document.getElementById('longitude3').value = selectedPair2.location1.longitude;
+            document.getElementById('location4Name').value = selectedPair2.location2.name;
+            document.getElementById('latitude4').value = selectedPair2.location2.latitude;
+            document.getElementById('longitude4').value = selectedPair2.location2.longitude;
 
-            dropdown2.addEventListener('change', function() {
-                let selectedPairIndex = this.value;
-                let selectedPair = data[selectedPairIndex];
-
-                // Update input fields for the second pair
-                document.getElementById('location3Name').value = selectedPair.location1.name;
-                document.getElementById('latitude3').value = selectedPair.location1.latitude;
-                document.getElementById('longitude3').value = selectedPair.location1.longitude;
-                document.getElementById('location4Name').value = selectedPair.location2.name;
-                document.getElementById('latitude4').value = selectedPair.location2.latitude;
-                document.getElementById('longitude4').value = selectedPair.location2.longitude;
-            });
-
-            // Enable the checkboxes and dropdowns now that the data has been loaded
-            pair1Checkbox.disabled = false;
-            pair2Checkbox.disabled = false;
-            dropdown1.disabled = false;
-            dropdown2.disabled = false;
-
-            // Hide the spinner
-            spinner.style.display = "none";
-        })
-        .catch(error => console.error('Error:', error));
-
-    pair1Checkbox.addEventListener('change', function() {
-        var inputs = firstPair.querySelectorAll('input');
-        if (this.checked) {
-            // Enable all inputs
-            inputs.forEach(function(input) {
-                input.disabled = false;
-            });
-        } else {
-            // Disable all inputs except the checkbox itself
-            inputs.forEach(function(input) {
-                if (input.id !== 'pair1Checkbox') {
-                    input.disabled = true;
-                    input.value = '';
-                }
-            });
-        }
-    });
-    
-    pair2Checkbox.addEventListener('change', function() {
-        var inputs = secondPair.querySelectorAll('input');
-        if (this.checked) {
-            // Enable all inputs
-            inputs.forEach(function(input) {
-                input.disabled = false;
-            });
-        } else {
-            // Disable all inputs except the checkbox itself
-            inputs.forEach(function(input) {
-                if (input.id !== 'pair2Checkbox') {
-                    input.disabled = true;
-                    input.value = '';
-                }
-            });
-        }
-    });
-
+            // Set the checkboxes as checked by default
+            pair1Checkbox.checked = true;
+            pair2Checkbox.checked = true;
+        });
 });
