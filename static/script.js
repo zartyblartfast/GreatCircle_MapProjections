@@ -13,13 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var isChecked1 = localStorage.getItem('includeFirstPair');
     if (isChecked1 === 'unchecked') {
         pair1Checkbox.checked = false;
-        firstPair.style.display = "none";
     }
 
     var isChecked2 = localStorage.getItem('includeSecondPair');
     if (isChecked2 === 'unchecked') {
         pair2Checkbox.checked = false;
-        secondPair.style.display = "none";
     }
 
     // Fetch the locations.json file
@@ -87,27 +85,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('latitude4').value = selectedPair.location2.latitude;
                 document.getElementById('longitude4').value = selectedPair.location2.longitude;
             });
-        });
 
-    document.getElementById('locationsForm').addEventListener('submit', function(e) {
-        spinner.style.display = 'inline';
-        // Save checkbox states
-        localStorage.setItem('includeFirstPair', pair1Checkbox.checked ? 'checked' : 'unchecked');
-        localStorage.setItem('includeSecondPair', pair2Checkbox.checked ? 'checked' : 'unchecked');
-    });
+            // Enable the checkboxes and dropdowns now that the data has been loaded
+            pair1Checkbox.disabled = false;
+            pair2Checkbox.disabled = false;
+            dropdown1.disabled = false;
+            dropdown2.disabled = false;
+
+            // Hide the spinner
+            spinner.style.display = "none";
+        })
+        .catch(error => console.error('Error:', error));
 
     pair1Checkbox.addEventListener('change', function() {
+        var inputs = firstPair.querySelectorAll('input');
         if (this.checked) {
-            // Show first pair and enable all inputs
-            firstPair.style.display = "";
-            var inputs = firstPair.querySelectorAll('input');
+            // Enable all inputs
             inputs.forEach(function(input) {
                 input.disabled = false;
             });
         } else {
-            // Hide first pair and disable all inputs
-            firstPair.style.display = "none";
-            var inputs = firstPair.querySelectorAll('input');
+            // Disable all inputs
             inputs.forEach(function(input) {
                 input.disabled = true;
             });
@@ -115,17 +113,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     pair2Checkbox.addEventListener('change', function() {
+        var inputs = secondPair.querySelectorAll('input');
         if (this.checked) {
-            // Show second pair and enable all inputs
-            secondPair.style.display = "";
-            var inputs = secondPair.querySelectorAll('input');
+            // Enable all inputs
             inputs.forEach(function(input) {
                 input.disabled = false;
             });
         } else {
-            // Hide second pair and disable all inputs
-            secondPair.style.display = "none";
-            var inputs = secondPair.querySelectorAll('input');
+            // Disable all inputs
             inputs.forEach(function(input) {
                 input.disabled = true;
             });
