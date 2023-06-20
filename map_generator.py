@@ -56,6 +56,8 @@ def plot_location_point(name, lon, lat, ax, color='r'):
 
 def main(projection, locations, output_file):
     logger.info(f"Generating map with projection {projection}, {len(locations)} locations, and output file {output_file}")
+
+    No_Locations = False
     
     # Unpack the location details
     if len(locations) == 2:
@@ -64,14 +66,16 @@ def main(projection, locations, output_file):
     elif len(locations) == 4:
         location1, location2, location3, location4 = locations
     else:
-        logger.error("locations must have length 2 or 4")
-        raise ValueError("locations must have length 2 or 4")
+        #logger.error("locations must have length 2 or 4")
+        #raise ValueError("locations must have length 2 or 4")
+        No_Locations = True
 
-    # Calculate the great circle points
-    lonlats1 = calculate_great_circle_points(location1[2], location1[1], location2[2], location2[1], 2000)
-    
-    if location3 and location4:
-        lonlats2 = calculate_great_circle_points(location3[2], location3[1], location4[2], location4[1], 2000)
+    if No_Locations == False:
+        # Calculate the great circle points
+        lonlats1 = calculate_great_circle_points(location1[2], location1[1], location2[2], location2[1], 2000)
+        
+        if location3 and location4:
+            lonlats2 = calculate_great_circle_points(location3[2], location3[1], location4[2], location4[1], 2000)
 
     # Create the map
     fig = plt.figure(figsize=(10, 10))
@@ -81,17 +85,18 @@ def main(projection, locations, output_file):
 
     # Plot the great circles and get their colors
     color1 = plot_great_circle(lonlats1, ax, color='b', linewidth=2, zorder=3)
-    
-    if location3 and location4:
-        color2 = plot_great_circle(lonlats2, ax, color='r', linewidth=2, zorder=3)
 
-    # Plot the location points
-    plot_location_point(location1[0], location1[2], location1[1], ax, color=color1)
-    plot_location_point(location2[0], location2[2], location2[1], ax, color=color1)
+    if No_Locations == False:
+        if location3 and location4:
+            color2 = plot_great_circle(lonlats2, ax, color='r', linewidth=2, zorder=3)
     
-    if location3 and location4:
-        plot_location_point(location3[0], location3[2], location3[1], ax, color=color2)
-        plot_location_point(location4[0], location4[2], location4[1], ax, color=color2)
+        # Plot the location points
+        plot_location_point(location1[0], location1[2], location1[1], ax, color=color1)
+        plot_location_point(location2[0], location2[2], location2[1], ax, color=color1)
+        
+        if location3 and location4:
+            plot_location_point(location3[0], location3[2], location3[1], ax, color=color2)
+            plot_location_point(location4[0], location4[2], location4[1], ax, color=color2)
 
     ax.set_global()
 
