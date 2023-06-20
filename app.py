@@ -55,15 +55,37 @@ def generate_map_ajax():
     filename_plate_carree = None
     filename_azimuthal_equidistant = None
 
+    plot_first_pair = 'plotFirstPair' in request.form
+    plot_second_pair = 'plotSecondPair' in request.form
+
+    if not plot_first_pair and not plot_second_pair:
+        # If neither checkbox is checked, generate empty maps
+        try:
+            time_str = datetime.now().strftime("%Y%m%d%H%M%S")
+            filename_plate_carree = f"map_image_PlateCarree_{time_str}.png"
+            filename_azimuthal_equidistant = f"map_image_AzimuthalEquidistant_{time_str}.png"
+
+            folderPath_plate_carree = os.path.join(app.root_path, 'static', 'images', filename_plate_carree)
+            folderPath__azimuthal_equidistant = os.path.join(app.root_path, 'static', 'images', filename_azimuthal_equidistant)
+
+            # Generate maps with no locations
+            generate_map(ccrs.PlateCarree(), [], folderPath_plate_carree)
+            generate_map(ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0), [], folderPath__azimuthal_equidistant)
+        except Exception as e:
+            app.logger.error("Error during map generation: %s", e)
+            return jsonify({"error": str(e)})
+
+        return jsonify({
+            'filename_plate_carree': filename_plate_carree,
+            'filename_azimuthal_equidistant': filename_azimuthal_equidistant
+        })
+
     location1_str = [request.form.get('location1Name'), request.form.get('latitude1'), request.form.get('longitude1')]
     app.logger.info(f"Received location1 data: {location1_str}")
     location2_str = [request.form.get('location2Name'), request.form.get('latitude2'), request.form.get('longitude2')]
     app.logger.info(f"Received location2 data: {location2_str}")
 
     app.logger.info(f"Form data: {request.form}")
-
-    plot_first_pair = 'plotFirstPair' in request.form
-    plot_second_pair = 'plotSecondPair' in request.form
 
     locations = []
 
