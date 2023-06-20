@@ -6,10 +6,13 @@ import cartopy.crs as ccrs
 import logging
 from datetime import datetime
 
-logging.basicConfig(filename='app.log', level=logging.DEBUG)
-
 app = Flask(__name__)
 
+if not app.debug:
+    file_handler = logging.FileHandler('app.log')
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    
 def convert_coord(coord_str):
     if coord_str[-1].upper() in ('N', 'S', 'E', 'W'):
         direction = coord_str[-1].upper()
@@ -53,12 +56,12 @@ def generate_map_ajax():
     location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
 
     if None in location1 or None in location2 or "" in location1_str or "" in location2_str:
-        logging.error("Location 1 or Location 2 were not provided in the correct format")
+        app.logger.error("Location 1 or Location 2 were not provided in the correct format")
         return jsonify({"error": "Location 1 or Location 2 were not provided in the correct format"})
 
     locations = [tuple(location1), tuple(location2)]
 
-    logging.info("plot_second_pair: %s", plot_second_pair)
+    app.logger.info("plot_second_pair: %s", plot_second_pair)
     if plot_second_pair:
         location3_str = [request.form.get('location3Name'), request.form.get('latitude3'), request.form.get('longitude3')]
         location4_str = [request.form.get('location4Name'), request.form.get('latitude4'), request.form.get('longitude4')]
@@ -67,7 +70,7 @@ def generate_map_ajax():
         location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
 
         if None in location3 or None in location4 or "" in location3_str or "" in location4_str:
-            logging.error("Location 3 or Location 4 were not provided in the correct format")
+            app.logger.error("Location 3 or Location 4 were not provided in the correct format")
             return jsonify({"error": "Location 3 or Location 4 were not provided in the correct format"})
 
         locations.extend([tuple(location3), tuple(location4)])
@@ -78,16 +81,18 @@ def generate_map_ajax():
         filename_azimuthal_equidistant = f"map_image_AzimuthalEquidistant_{time_str}.png"
 
         projection = ccrs.PlateCarree()
-        logging.info("os.path.join(app.root_path, 'images', filename_plate_carree): %s", os.path.join(app.root_path, 'images', filename_plate_carree))
-        logging.info("filename_plate_carree: %s", filename_plate_carree)
+        app.logger.info("os.path.join(app.root_path, 'images', filename_plate_carree): %s", os.path.join(app.root_path, 'images', filename_plate_carree))
+        app.logger.info("filename_plate_carree: %s", filename_plate_carree)
         generate_map(projection, locations, os.path.join(app.root_path, 'images', filename_plate_carree))
 
         projection = ccrs.AzimuthalEquidistant(central_latitude=90, central_longitude=0)
+        app.logger.info("os.path.join(app.root_path, 'images', filename_plate_carree): %s", os.path.join(app.root_path, 'images', filename_azimuthal_equidistant))
+        app.logger.info("filename_azimuthal_equidistant: %s", filename_azimuthal_equidistant)
         generate_map(projection, locations, os.path.join(app.root_path, 'images', filename_azimuthal_equidistant))
 
-        logging.info("Maps generated")
+        app.logger.info("Maps generated")
     except Exception as e:
-        logging.exception("Error during map generation: %s", e)
+        app.logger.error("Error during map generation: %s", e)
         return jsonify({"error": str(e)})
 
     return jsonify({
