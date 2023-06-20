@@ -12,12 +12,15 @@ import logging
 logger = logging.getLogger(__name__)
 
 def calculate_great_circle_points(lon1, lat1, lon2, lat2, num_points):
+    logger.info(f"Calculating great circle points between ({lon1}, {lat1}) and ({lon2}, {lat2}) with {num_points} points")
     g = pyproj.Geod(ellps='WGS84')
     lonlats = np.array(g.npts(lon1, lat1, lon2, lat2, num_points))
     lonlats = np.vstack([[lon1, lat1], lonlats, [lon2, lat2]])  # Add start and end points
     return lonlats
 
 def plot_great_circle(lonlats, ax, color='b', linewidth=2, zorder=3):
+    logger.info(f"Plotting great circle for {len(lonlats)} points")
+    
     ax.plot(lonlats[:,0], lonlats[:,1], color, transform=ccrs.Geodetic(), linewidth=linewidth, zorder=zorder)
     
     # Calculate the great circle distance
@@ -40,12 +43,16 @@ def plot_great_circle(lonlats, ax, color='b', linewidth=2, zorder=3):
     return color  # Return the color code
 
 def plot_location_point(name, lon, lat, ax, color='r'):
+    logger.info(f"Plotting location point for {name} at ({lon}, {lat})")
+    
     ax.plot(lon, lat, 'o', transform=ccrs.Geodetic(), color=color, markersize=7)
     ax.text(lon, lat, name, transform=ccrs.Geodetic(), fontsize=10, ha='right', va='bottom', color=color)
 
     return color  # Return the color code
 
 def main(projection, locations, output_file):
+    logger.info(f"Generating map with projection {projection}, {len(locations)} locations, and output file {output_file}")
+    
     # Unpack the location details
     if len(locations) == 2:
         location1, location2 = locations
@@ -53,6 +60,7 @@ def main(projection, locations, output_file):
     elif len(locations) == 4:
         location1, location2, location3, location4 = locations
     else:
+        logger.error("locations must have length 2 or 4")
         raise ValueError("locations must have length 2 or 4")
 
     # Calculate the great circle points
@@ -96,8 +104,12 @@ def main(projection, locations, output_file):
         gl.xlocator = mticker.FixedLocator(np.arange(-180, 180, 30))
         gl.ylocator = mticker.FixedLocator(np.arange(-90, 90, 30))
 
-    plt.savefig(output_file)
-    #plt.savefig(os.path.join(app.root_path, 'images', filename))
-
+    try:
+        plt.savefig(output_file)
+        logger.info(f"Map successfully saved to {output_file}")
+    except Exception as e:
+        logger.exception("Failed to save map")
+        raise ValueError("Failed to save map")
+        
     # Close the figure to free up memory
     plt.close(fig)
