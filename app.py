@@ -56,13 +56,16 @@ def generate_map_ajax():
     filename_azimuthal_equidistant = None
 
     location1_str = [request.form.get('location1Name'), request.form.get('latitude1'), request.form.get('longitude1')]
+    app.logger.info(f"Received location1 data: {location1_str}")
     location2_str = [request.form.get('location2Name'), request.form.get('latitude2'), request.form.get('longitude2')]
-
+    app.logger.info(f"Received location2 data: {location2_str}")
+    
     plot_second_pair = 'plotSecondPair' in request.form
 
     location1 = [location1_str[0], convert_coord(location1_str[1]), convert_coord(location1_str[2])]
     location2 = [location2_str[0], convert_coord(location2_str[1]), convert_coord(location2_str[2])]
 
+    
     if None in location1 or None in location2 or "" in location1_str or "" in location2_str:
         app.logger.error("Location 1 or Location 2 were not provided in the correct format")
         return jsonify({"error": "Location 1 or Location 2 were not provided in the correct format"})
@@ -72,8 +75,10 @@ def generate_map_ajax():
     app.logger.info("plot_second_pair: %s", plot_second_pair)
     if plot_second_pair:
         location3_str = [request.form.get('location3Name'), request.form.get('latitude3'), request.form.get('longitude3')]
+        app.logger.info(f"Received location3 data: {location3_str}")
         location4_str = [request.form.get('location4Name'), request.form.get('latitude4'), request.form.get('longitude4')]
-
+        app.logger.info(f"Received location4 data: {location4_str}")
+        
         location3 = [location3_str[0], convert_coord(location3_str[1]), convert_coord(location3_str[2])]
         location4 = [location4_str[0], convert_coord(location4_str[1]), convert_coord(location4_str[2])]
 
