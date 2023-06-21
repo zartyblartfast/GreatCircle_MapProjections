@@ -79,8 +79,8 @@
     </form>
     
     <!-- Add the img tags here -->
-    <img src="" alt="PlateCarree projection" id="mapImage1">
-    <img src="" alt="AzimuthalEquidistant projection" id="mapImage2">
+    <img src="" alt="PlateCarree projection" id="mapImage1" style="display: none;">
+    <img src="" alt="AzimuthalEquidistant projection" id="mapImage2" style="display: none;">
     
     <div id="mapProjection1"></div>
     <div id="mapProjection2"></div>
@@ -120,35 +120,33 @@
         });
 </script>
 <script>
-    $(document).ready(function() {
-        $('#locationsForm').on('submit', function(e) {
-            e.preventDefault();
+    $('#locationsForm').on('submit', function(e) {
+        e.preventDefault();
     
-            $.ajax({
-                url: "{{ url_for('generate_map_ajax') }}",
-                method: "POST",
-                data: $(this).serialize(),
-                beforeSend: function() {
-                    $("button[type='submit']").prop("disabled", true);
-                    $('#spinner').show();
-                },
-                success: function(data) {
-                    console.log(data);
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        $('#mapImage1').attr('src', '/static/images/' + data.filename_plate_carree);
-                        $('#mapImage2').attr('src', '/static/images/' + data.filename_azimuthal_equidistant);
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("AJAX request failed: ", textStatus, errorThrown);
-                },
-                complete: function() {
-                    $("button[type='submit']").prop("disabled", false);
-                    $('#spinner').hide();
+        $.ajax({
+            url: "{{ url_for('generate_map_ajax') }}",
+            method: "POST",
+            data: $(this).serialize(),
+            beforeSend: function() {
+                $("button[type='submit']").prop("disabled", true);
+                $('#spinner').show();
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    $('#mapImage1').attr('src', '/static/images/' + data.filename_plate_carree).show();
+                    $('#mapImage2').attr('src', '/static/images/' + data.filename_azimuthal_equidistant).show();
                 }
-            });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX request failed: ", textStatus, errorThrown);
+            },
+            complete: function() {
+                $("button[type='submit']").prop("disabled", false);
+                $('#spinner').hide();
+            }
         });
     });
 </script>
