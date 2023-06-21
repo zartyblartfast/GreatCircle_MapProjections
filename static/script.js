@@ -70,5 +70,32 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set the checkboxes as checked by default
             pair1Checkbox.checked = true;
             pair2Checkbox.checked = true;
+
+            // Set the dropdowns to update the input fields when the selection changes
+            dropdown1.addEventListener('change', function() {
+                let selectedIndex = this.value;
+                if (selectedIndex !== "") {
+                    let selectedPair = data[selectedIndex];
+                    document.getElementById('location1Name').value = selectedPair.location1.name;
+                    document.getElementById('latitude1').value = selectedPair.location1.latitude;
+                    document.getElementById('longitude1').value = selectedPair.location1.longitude;
+                    document.getElementById('location2Name').value = selectedPair.location2.name;
+                    document.getElementById('latitude2').value = selectedPair.location2.latitude;
+                    document.getElementById('longitude2').value = selectedPair.location2.longitude;
+                }
+            });
+
+            dropdown2.addEventListener('change', function() {
+                let selectedIndex = this.value;
+                if (selectedIndex !== "") {
+                    let selectedPair = data[selectedIndex];
+                    document.getElementById('location3Name').value = selectedPair.location1.name;
+                    document.getElementById('latitude3').value = selectedPair.location1.latitude;
+                    document.getElementById('longitude3').value = selectedPair.location1.longitude;
+                    document.getElementById('location4Name').value = selectedPair.location2.name;
+                    document.getElementById('latitude4').value = selectedPair.location2.latitude;
+                    document.getElementById('longitude4').value = selectedPair.location2.longitude;
+                }
+            });
         });
 });
